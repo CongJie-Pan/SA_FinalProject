@@ -1,0 +1,48 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/25.0.2 Chrome/128.0.6613.186 Electron/32.2.5 Safari/537.36" version="25.0.2">
+  <diagram name="第 1 页" id="96cKQmSGqYREGGKDQmWn">
+    <mxGraphModel dx="1036" dy="606" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="LYvLmmNGBvaHuewkFD8c-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="BYyExUJuoH7IeaTC6Waq-1" target="LYvLmmNGBvaHuewkFD8c-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="BYyExUJuoH7IeaTC6Waq-1" value="違規處理" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="170" y="70" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LYvLmmNGBvaHuewkFD8c-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="LYvLmmNGBvaHuewkFD8c-1" target="LYvLmmNGBvaHuewkFD8c-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LYvLmmNGBvaHuewkFD8c-1" value="查詢請求處理" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="170" y="230" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="LYvLmmNGBvaHuewkFD8c-3" value="車牌&lt;div&gt;舉發ID&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="225" y="170" width="60" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="LYvLmmNGBvaHuewkFD8c-4" value="車籍資料庫" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
+          <mxGeometry x="530" y="240" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LYvLmmNGBvaHuewkFD8c-6" value="&lt;p class=&quot;MsoNormal&quot;&gt;&lt;span style=&quot;font-family:&amp;quot;新細明體&amp;quot;,serif;mso-ascii-font-family:&lt;br/&gt;Calibri;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:Calibri&quot;&gt;車籍查詢序號&lt;/span&gt;&lt;span lang=&quot;EN-US&quot;&gt;、&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot; lang=&quot;EN-US&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial; font-family: 新細明體, serif;&quot;&gt;車牌&lt;/span&gt;&lt;/p&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="310" y="220" width="130" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="LYvLmmNGBvaHuewkFD8c-7" value="&lt;p class=&quot;MsoNormal&quot;&gt;&lt;span style=&quot;font-family:&amp;quot;新細明體&amp;quot;,serif;mso-ascii-font-family:&lt;br/&gt;Calibri;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:Calibri&quot;&gt;車籍查詢序號&lt;/span&gt;&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;=&lt;/span&gt;&lt;span style=&quot;font-family:&amp;quot;新細明體&amp;quot;,serif;&lt;br/&gt;mso-ascii-font-family:Calibri;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:&lt;br/&gt;Calibri&quot;&gt;查詢序號&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot; lang=&quot;EN-US&quot;&gt;+&lt;/span&gt;&lt;span style=&quot;background-color: initial; font-family: 新細明體, serif;&quot;&gt;舉發ID&lt;/span&gt;&lt;/p&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="55" y="485" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="LYvLmmNGBvaHuewkFD8c-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=0.97;entryY=0.702;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="LYvLmmNGBvaHuewkFD8c-4" target="LYvLmmNGBvaHuewkFD8c-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LYvLmmNGBvaHuewkFD8c-9" value="車籍查詢序號、車牌、車牌錯誤碼" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="310" y="288" width="200" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="LYvLmmNGBvaHuewkFD8c-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="LYvLmmNGBvaHuewkFD8c-1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="188" y="130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="LYvLmmNGBvaHuewkFD8c-11" value="車牌&lt;div&gt;車牌錯誤碼&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="100" y="163" width="80" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

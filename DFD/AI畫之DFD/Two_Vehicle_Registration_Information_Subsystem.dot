@@ -1,0 +1,61 @@
+digraph "車籍資料子系統 (Vehicle Registration Information Subsystem)" {
+
+   // 基本圖形設定
+   rankdir=TB;
+   fontname="Microsoft JhengHei";
+   node [fontname="Microsoft JhengHei"];
+   edge [fontname="Microsoft JhengHei"];
+   
+   // 設定元件間距
+   nodesep=1.0;
+   ranksep=1.2;
+   
+   // 設定標題位置與樣式
+   labelloc="t";
+   label="\n車籍資料子系統 - 資料流程圖\n";
+   fontsize=16;
+
+   // 外部實體設定
+   node [shape=box, style=solid, width=2, height=0.8];
+   監理單位 [label="監理單位"];
+   違規處理系統 [label="違規處理\n子系統"];
+   開單系統 [label="開單舉報\n子系統"];
+   儀表板 [label="全國違規事件\n管理儀表板"];
+
+   // 處理程序設定
+   node [shape=circle, width=1.8, fixedsize=true];
+   同步處理 [label="資料同步\n處理"];
+   查詢處理 [label="查詢請求\n處理"];
+   驗證處理 [label="資料驗證\n處理"];
+   異常處理 [label="異常狀態\n處理"];
+
+   // 資料儲存設定
+   node [shape=record, width=2.5, height=1.2];
+   基本資料庫 [label="基本資料庫|{車輛資料|車主資料|牌照資料}"];
+   交易紀錄庫 [label="交易紀錄庫|{查詢紀錄|異動紀錄}"];
+   異常資料庫 [label="異常資料庫|{報廢清單|失竊清單}"];
+
+   // 資料流設定
+   edge [len=2.0, minlen=2];
+   監理單位 -> 同步處理 [label="  車籍異動資料"];
+   同步處理 -> 基本資料庫 [label="  更新資料"];
+   違規處理系統 -> 查詢處理 [label="  查詢請求"];
+   查詢處理 -> 基本資料庫 [label="  讀取資料"];
+   基本資料庫 -> 驗證處理 [label="  車籍資料"];
+   驗證處理 -> 異常處理 [label="  異常狀態"];
+   異常處理 -> 異常資料庫 [label="  標記異常"];
+   驗證處理 -> 開單系統 [label="  驗證結果"];
+   
+   // 記錄流程設定
+   查詢處理 -> 交易紀錄庫 [label="  存取紀錄"];
+   異常處理 -> 交易紀錄庫 [label="  異常紀錄"];
+   
+   // 統計分析流設定
+   基本資料庫 -> 儀表板 [label="  統計資料"];
+   異常資料庫 -> 儀表板 [label="  異常統計"];
+   
+   // 排版分層
+   {rank=same; 監理單位 違規處理系統 開單系統}
+   {rank=same; 同步處理 查詢處理 驗證處理 異常處理}
+   {rank=same; 基本資料庫 交易紀錄庫 異常資料庫}
+}

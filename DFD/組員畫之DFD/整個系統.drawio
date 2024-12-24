@@ -1,0 +1,162 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.17 Chrome/128.0.6613.36 Electron/32.0.1 Safari/537.36" version="24.7.17">
+  <diagram name="第 1 页" id="-KQyj9BBT9JdTNPj5CYo">
+    <mxGraphModel dx="1215" dy="577" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="OVrPUqMh0sCAULW7YGe9-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="OVrPUqMh0sCAULW7YGe9-1" target="OVrPUqMh0sCAULW7YGe9-2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="OVrPUqMh0sCAULW7YGe9-1" value="智慧燈桿" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="180" y="70" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="OVrPUqMh0sCAULW7YGe9-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0;entryDx=0;entryDy=0;" parent="1" source="OVrPUqMh0sCAULW7YGe9-2" target="OVrPUqMh0sCAULW7YGe9-4" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="OVrPUqMh0sCAULW7YGe9-9" style="edgeStyle=entityRelationEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="OVrPUqMh0sCAULW7YGe9-2" target="OVrPUqMh0sCAULW7YGe9-8" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="OVrPUqMh0sCAULW7YGe9-2" value="1. 違規處理子系統" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="180" y="340" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="OVrPUqMh0sCAULW7YGe9-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0;exitDx=0;exitDy=0;" parent="1" source="OVrPUqMh0sCAULW7YGe9-4" target="OVrPUqMh0sCAULW7YGe9-2" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="282" y="460" />
+              <mxPoint x="282" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OVrPUqMh0sCAULW7YGe9-4" value="車籍驗證" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="180" y="540" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="OVrPUqMh0sCAULW7YGe9-8" value="違規辨識(只做超速，所以跳過這個步驟)" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="450" y="340" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="OVrPUqMh0sCAULW7YGe9-27" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" source="OVrPUqMh0sCAULW7YGe9-10" target="OVrPUqMh0sCAULW7YGe9-26" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="OVrPUqMh0sCAULW7YGe9-10" value="全國舉發案件處理檔" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="710" y="360" width="140" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="OVrPUqMh0sCAULW7YGe9-11" value="舉發ID" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="OVrPUqMh0sCAULW7YGe9-10" vertex="1">
+          <mxGeometry y="30" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="OVrPUqMh0sCAULW7YGe9-12" value="違規照片" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="OVrPUqMh0sCAULW7YGe9-10" vertex="1">
+          <mxGeometry y="60" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="OVrPUqMh0sCAULW7YGe9-13" value="違規地點" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="OVrPUqMh0sCAULW7YGe9-10" vertex="1">
+          <mxGeometry y="90" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="OVrPUqMh0sCAULW7YGe9-15" style="edgeStyle=entityRelationEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.011;entryY=0.162;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="OVrPUqMh0sCAULW7YGe9-8" target="OVrPUqMh0sCAULW7YGe9-10" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="OVrPUqMh0sCAULW7YGe9-17" style="edgeStyle=entityRelationEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0;exitDx=0;exitDy=0;entryX=1.011;entryY=0.28;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="OVrPUqMh0sCAULW7YGe9-16" target="OVrPUqMh0sCAULW7YGe9-11" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="OVrPUqMh0sCAULW7YGe9-16" value="人工辨識" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="1070" y="390" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="OVrPUqMh0sCAULW7YGe9-18" style="edgeStyle=entityRelationEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1.011;exitY=0.187;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitPerimeter=0;" parent="1" source="OVrPUqMh0sCAULW7YGe9-12" target="OVrPUqMh0sCAULW7YGe9-16" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="OVrPUqMh0sCAULW7YGe9-19" value="人工辨識紀錄Log" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="1390" y="360" width="140" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="OVrPUqMh0sCAULW7YGe9-20" value="舉發ID" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="OVrPUqMh0sCAULW7YGe9-19" vertex="1">
+          <mxGeometry y="30" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="OVrPUqMh0sCAULW7YGe9-21" value="佐理員ID" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="OVrPUqMh0sCAULW7YGe9-19" vertex="1">
+          <mxGeometry y="60" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="OVrPUqMh0sCAULW7YGe9-22" value="時間" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="OVrPUqMh0sCAULW7YGe9-19" vertex="1">
+          <mxGeometry y="90" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="OVrPUqMh0sCAULW7YGe9-29" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="OVrPUqMh0sCAULW7YGe9-26" target="OVrPUqMh0sCAULW7YGe9-28" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="OVrPUqMh0sCAULW7YGe9-26" value="儀表板" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="720" y="210" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="OVrPUqMh0sCAULW7YGe9-28" value="交通管理單位" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="910" y="220" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="OVrPUqMh0sCAULW7YGe9-33" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="OVrPUqMh0sCAULW7YGe9-30" target="OVrPUqMh0sCAULW7YGe9-32" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="OVrPUqMh0sCAULW7YGe9-38" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="OVrPUqMh0sCAULW7YGe9-30" target="OVrPUqMh0sCAULW7YGe9-34" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="OVrPUqMh0sCAULW7YGe9-30" value="開單" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="720" y="560" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="OVrPUqMh0sCAULW7YGe9-31" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1.04;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitPerimeter=0;" parent="1" source="OVrPUqMh0sCAULW7YGe9-13" target="OVrPUqMh0sCAULW7YGe9-30" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="OVrPUqMh0sCAULW7YGe9-32" value="違規民眾" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="950" y="580" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="OVrPUqMh0sCAULW7YGe9-34" value="罰單列印紀錄Log" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="480" y="665" width="140" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="OVrPUqMh0sCAULW7YGe9-35" value="舉發ID" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="OVrPUqMh0sCAULW7YGe9-34" vertex="1">
+          <mxGeometry y="30" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="OVrPUqMh0sCAULW7YGe9-36" value="列印員工ID" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="OVrPUqMh0sCAULW7YGe9-34" vertex="1">
+          <mxGeometry y="60" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="OVrPUqMh0sCAULW7YGe9-37" value="列印時間" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="OVrPUqMh0sCAULW7YGe9-34" vertex="1">
+          <mxGeometry y="90" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="OVrPUqMh0sCAULW7YGe9-39" value="車籍查詢" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="760" y="730" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="OVrPUqMh0sCAULW7YGe9-40" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.223;entryY=0.043;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="OVrPUqMh0sCAULW7YGe9-30" target="OVrPUqMh0sCAULW7YGe9-39" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="OVrPUqMh0sCAULW7YGe9-41" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.75;entryY=0.948;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="OVrPUqMh0sCAULW7YGe9-39" target="OVrPUqMh0sCAULW7YGe9-30" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6mUldYSU-GdtnjfY02ew-1" value="違規案件" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="780" y="310" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="6mUldYSU-GdtnjfY02ew-2" value="違規分析" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="840" y="220" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="6mUldYSU-GdtnjfY02ew-3" value="車牌&lt;div&gt;舉發ID&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="720" y="670" width="60" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="6mUldYSU-GdtnjfY02ew-4" value="車主姓名、地址、車輛類型" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="830" y="670" width="170" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="6mUldYSU-GdtnjfY02ew-5" value="&lt;p class=&quot;MsoNormal&quot;&gt;&lt;span style=&quot;font-family:&amp;quot;新細明體&amp;quot;,serif;mso-ascii-font-family:&lt;br/&gt;Calibri;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:Calibri&quot;&gt;舉發&lt;/span&gt;&lt;span lang=&quot;EN-US&quot;&gt;ID : Serial Number&lt;/span&gt;&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;+&lt;/span&gt;&lt;span style=&quot;font-family:&amp;quot;新細明體&amp;quot;,serif;&lt;br/&gt;mso-ascii-font-family:Calibri;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:&lt;br/&gt;Calibri&quot;&gt;違規照片&lt;/span&gt;&lt;span lang=&quot;EN-US&quot;&gt; : Picture&lt;/span&gt;&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;+&lt;/span&gt;&lt;span style=&quot;font-family:&amp;quot;新細明體&amp;quot;,serif;&lt;br/&gt;mso-ascii-font-family:Calibri;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:&lt;br/&gt;Calibri&quot;&gt;違規地點&lt;/span&gt;&lt;span lang=&quot;EN-US&quot;&gt; : Char String&lt;/span&gt;&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;+&lt;/span&gt;&lt;span style=&quot;font-family:&amp;quot;新細明體&amp;quot;,serif;&lt;br/&gt;mso-ascii-font-family:Calibri;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:&lt;br/&gt;Calibri&quot;&gt;違規時間&lt;/span&gt;&lt;span lang=&quot;EN-US&quot;&gt; : Date/Time&lt;/span&gt;&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;+&lt;/span&gt;&lt;span style=&quot;font-family:&amp;quot;新細明體&amp;quot;,serif;&lt;br/&gt;mso-ascii-font-family:Calibri;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:&lt;br/&gt;Calibri&quot;&gt;紀錄設備&lt;/span&gt;&lt;span lang=&quot;EN-US&quot;&gt;ID : Char String&lt;/span&gt;&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;+&lt;/span&gt;&lt;span style=&quot;font-family:&amp;quot;新細明體&amp;quot;,serif;&lt;br/&gt;mso-ascii-font-family:Calibri;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:&lt;br/&gt;Calibri&quot;&gt;道路速限&lt;/span&gt;&lt;span lang=&quot;EN-US&quot;&gt; : Integer&lt;/span&gt;&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;+&lt;/span&gt;&lt;span style=&quot;font-family:&amp;quot;新細明體&amp;quot;,serif;&lt;br/&gt;mso-ascii-font-family:Calibri;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family:&lt;br/&gt;Calibri&quot;&gt;車輛時速&lt;/span&gt;&lt;span lang=&quot;EN-US&quot;&gt; : Integer&lt;/span&gt;&lt;/p&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="230" y="130" width="160" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="6mUldYSU-GdtnjfY02ew-6" value="舉發ID&lt;div&gt;車牌&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="130" y="443" width="60" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="6mUldYSU-GdtnjfY02ew-7" value="車牌&lt;div&gt;車牌錯誤碼&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="280" y="470" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="6mUldYSU-GdtnjfY02ew-10" value="舉發ID、違規照片、車牌" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="880" y="430" width="160" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="6mUldYSU-GdtnjfY02ew-11" value="舉發ID、違規照片、車牌、違規處理" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="870" y="365" width="220" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="6mUldYSU-GdtnjfY02ew-12" value="舉發ID&lt;div&gt;員工ID&lt;/div&gt;&lt;div&gt;時間&lt;/div&gt;&lt;div&gt;處理機&lt;/div&gt;&lt;div&gt;事件類型&lt;/div&gt;&lt;div&gt;車牌&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="1250" y="430" width="70" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="6mUldYSU-GdtnjfY02ew-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.006;entryY=0.293;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="OVrPUqMh0sCAULW7YGe9-16" target="OVrPUqMh0sCAULW7YGe9-21" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6mUldYSU-GdtnjfY02ew-14" value="舉發ID&lt;div&gt;列印員工ID&lt;/div&gt;&lt;div&gt;列印時間&lt;/div&gt;&lt;div&gt;處理機&lt;/div&gt;&lt;div&gt;罰單照片&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="590" y="540" width="80" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="6mUldYSU-GdtnjfY02ew-15" value="&lt;p class=&quot;MsoNormal&quot;&gt;&lt;span style=&quot;font-family: 新細明體, serif;&quot;&gt;舉發&lt;/span&gt;&lt;span lang=&quot;EN-US&quot;&gt;ID : Serial Number&lt;/span&gt;&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;+&lt;/span&gt;&lt;span style=&quot;font-family: 新細明體, serif;&quot;&gt;違規照片&lt;/span&gt;&lt;span lang=&quot;EN-US&quot;&gt;&amp;nbsp;: Picture&lt;/span&gt;&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;+&lt;/span&gt;&lt;span style=&quot;font-family: 新細明體, serif;&quot;&gt;違規地點&lt;/span&gt;&lt;span lang=&quot;EN-US&quot;&gt;&amp;nbsp;: Char String&lt;/span&gt;&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;+&lt;/span&gt;&lt;span style=&quot;font-family: 新細明體, serif;&quot;&gt;違規時間&lt;/span&gt;&lt;span lang=&quot;EN-US&quot;&gt;&amp;nbsp;: Date/Time&lt;/span&gt;&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;+&lt;/span&gt;&lt;span style=&quot;font-family: 新細明體, serif;&quot;&gt;紀錄設備&lt;/span&gt;&lt;span lang=&quot;EN-US&quot;&gt;ID : Char String&lt;/span&gt;&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;+&lt;/span&gt;&lt;span style=&quot;font-family: 新細明體, serif;&quot;&gt;道路速限&lt;/span&gt;&lt;span lang=&quot;EN-US&quot;&gt;&amp;nbsp;: Integer&lt;/span&gt;&lt;/p&gt;&lt;p class=&quot;MsoNormal&quot;&gt;&lt;span lang=&quot;EN-US&quot;&gt;+&lt;/span&gt;&lt;span style=&quot;font-family: 新細明體, serif;&quot;&gt;車輛時速&lt;/span&gt;&lt;span lang=&quot;EN-US&quot;&gt;&amp;nbsp;: Integer&lt;/span&gt;&lt;/p&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="540" y="170" width="160" height="220" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

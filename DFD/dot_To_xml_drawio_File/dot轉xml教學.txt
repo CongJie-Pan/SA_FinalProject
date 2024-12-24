@@ -1,0 +1,3 @@
+先cd 到當前檔案所在資料夾
+conda activate gtk_env_new
+python convert_dfd.py
