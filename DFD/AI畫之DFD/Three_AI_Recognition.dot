@@ -1,0 +1,89 @@
+digraph AI_Recognition_System {
+   // 圖形設定
+   rankdir=TB;
+   nodesep=0.75;
+   ranksep=0.75;
+   fontname="Arial";
+   
+   // 標題
+   label="\n\nAI辨識子系統\nAI Recognition";
+   labelloc="t";
+   fontsize=20;
+
+   // 節點樣式設定
+   node [shape=rect, fontname="Arial", style="filled", fillcolor="lightgray", width=2, height=0.8];
+   edge [fontname="Arial", fontsize=12];
+   
+   // 外部實體
+   SmartCamera [label="智慧燈桿\n(測照設備)", shape=rect];
+   TrafficOfficer [label="交通佐理員", shape=rect];
+   DMV [label="監理單位", shape=rect];
+   
+   // 違規處理子系統 (以不同顏色區分)
+   subgraph cluster_violation {
+       label="違規處理子系統";
+       style=filled;
+       color=lightblue;
+       node [shape=circle, fixedsize=true, width=1.8, fillcolor="white"];
+       
+       ViolationProcess1 [label="1.違規資料\n接收"];
+       ViolationProcess2 [label="2.違規分類\n處理"];
+       ViolationProcess3 [label="3.案件分派"];
+   }
+   
+   // AI辨識子系統處理程序
+   subgraph cluster_ai {
+       label="AI辨識子系統";
+       style=filled;
+       color=lightgreen;
+       node [shape=circle, fixedsize=true, width=1.8, fillcolor="white"];
+       
+       Process1 [label="1.AI資料\n前處理"];
+       Process2 [label="2.AI違規\n判定"];
+       Process3 [label="3.可信度\n評估"];
+       Process4 [label="4.報告\n生成"];
+       Process5 [label="5.學習\n優化"];
+   }
+   
+   // 資料儲存
+   node [shape=record, fillcolor="lightyellow"];
+   DS1 [label="違規影像庫"];
+   DS2 [label="判定結果庫"];
+   DS3 [label="學習模型庫"];
+   DS4 [label="系統日誌"];
+   ViolationDB [label="違規案件庫"];
+   
+   // 系統間連接
+   SmartCamera -> ViolationProcess1 [label=" 違規原始資料"];
+   ViolationProcess1 -> ViolationProcess2;
+   ViolationProcess2 -> Process1 [label=" 需AI辨識案件"];
+   ViolationProcess2 -> ViolationDB;
+   
+   // AI系統內部流程
+   Process1 -> DS1;
+   DS1 -> Process2;
+   Process2 -> Process3;
+   Process3 -> Process4 [label=" 判定通過"];
+   Process3 -> TrafficOfficer [label=" 需人工複查"];
+   Process4 -> ViolationProcess3 [label=" AI判定結果"];
+   
+   // 回饋循環
+   TrafficOfficer -> Process5;
+   Process5 -> DS3;
+   DS3 -> Process2;
+   
+   // 資料記錄
+   {rank=same; Process3 Process4}
+   {rank=same; DS1 DS2 DS3}
+   
+   // 系統操作記錄
+   edge [color="gray", style="dashed"];
+   Process1 -> DS4;
+   Process2 -> DS4;
+   Process3 -> DS4;
+   Process4 -> DS4;
+   Process5 -> DS4;
+   ViolationProcess1 -> DS4;
+   ViolationProcess2 -> DS4;
+   ViolationProcess3 -> DS4;
+}

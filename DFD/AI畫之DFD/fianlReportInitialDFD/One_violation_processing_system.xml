@@ -1,0 +1,173 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxGraphModel grid="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+    <mxCell id="node1" value="&lt;font style='font-size: 14.0px;' face='Arial Unicode MS' color='#000000'&gt;智慧燈桿&lt;/font&gt;" style="verticalAlign=middle;html=1;rounded=0;labelBackgroundColor=none;strokeColor=black;fillColor=none;strokeWidth=1;dashed=0;" parent="1" vertex="1">
+      <mxGeometry x="19.33" y="159.31999999999996" width="74.0" height="36.00000000000003" as="geometry" />
+    </mxCell>
+    <mxCell id="node2" value="&lt;font style='font-size: 14.0px;' face='Arial Unicode MS' color='#000000'&gt;1.0&lt;br/&gt;資料接收&lt;/font&gt;" style="ellipse;aspect=fixed;verticalAlign=middle;html=1;rounded=0;labelBackgroundColor=none;strokeColor=black;fillColor=none;strokeWidth=1;dashed=0;" parent="1" vertex="1">
+      <mxGeometry x="244.83" y="129.16999999999996" width="104.3" height="104.3" as="geometry" />
+    </mxCell>
+    <mxCell id="node8" value="&lt;font style='font-size: 14.0px;' face='Arial Unicode MS' color='#000000'&gt;2.0&lt;br/&gt;初步處理&lt;/font&gt;" style="ellipse;aspect=fixed;verticalAlign=middle;html=1;rounded=0;labelBackgroundColor=none;strokeColor=black;fillColor=none;strokeWidth=1;dashed=0;" parent="1" vertex="1">
+      <mxGeometry x="443.48" y="129.16999999999996" width="104.3" height="104.3" as="geometry" />
+    </mxCell>
+    <mxCell id="node3" value="&lt;font style='font-size: 14.0px;' face='Arial Unicode MS' color='#000000'&gt;車籍資料子系統&lt;/font&gt;" style="verticalAlign=middle;html=1;rounded=0;labelBackgroundColor=none;strokeColor=black;fillColor=none;strokeWidth=1;dashed=0;" parent="1" vertex="1">
+      <mxGeometry x="669.96" y="126.31999999999996" width="116.0" height="36.0" as="geometry" />
+    </mxCell>
+    <mxCell id="node4" value="&lt;font style='font-size: 14.0px;' face='Arial Unicode MS' color='#000000'&gt;4.0&lt;br/&gt;資料確認&lt;/font&gt;" style="ellipse;aspect=fixed;verticalAlign=middle;html=1;rounded=0;labelBackgroundColor=none;strokeColor=black;fillColor=none;strokeWidth=1;dashed=0;" parent="1" vertex="1">
+      <mxGeometry x="913.8100000000001" y="133.16999999999996" width="104.3" height="104.3" as="geometry" />
+    </mxCell>
+    <mxCell id="node11" value="&lt;font style='font-size: 14.0px;' face='Arial Unicode MS' color='#000000'&gt;5.0&lt;br/&gt;結果更新&lt;/font&gt;" style="ellipse;aspect=fixed;verticalAlign=middle;html=1;rounded=0;labelBackgroundColor=none;strokeColor=black;fillColor=none;strokeWidth=1;dashed=0;" parent="1" vertex="1">
+      <mxGeometry x="1118.1299999999999" y="133.16999999999996" width="104.3" height="104.3" as="geometry" />
+    </mxCell>
+    <mxCell id="node5" value="&lt;font style='font-size: 14.0px;' face='Arial Unicode MS' color='#000000'&gt;AI辨識子系統&lt;/font&gt;" style="verticalAlign=middle;html=1;rounded=0;labelBackgroundColor=none;strokeColor=black;fillColor=none;strokeWidth=1;dashed=0;" parent="1" vertex="1">
+      <mxGeometry x="915.46" y="12.319999999999993" width="101.0" height="36.0" as="geometry" />
+    </mxCell>
+    <mxCell id="node6" value="&lt;font style='font-size: 14.0px;' face='Arial Unicode MS' color='#000000'&gt;人工辨識子系統&lt;/font&gt;" style="verticalAlign=middle;html=1;rounded=0;labelBackgroundColor=none;strokeColor=black;fillColor=none;strokeWidth=1;dashed=0;" parent="1" vertex="1">
+      <mxGeometry x="907.96" y="66.31999999999996" width="116.0" height="36.0" as="geometry" />
+    </mxCell>
+    <mxCell id="node7" value="&lt;font style='font-size: 14.0px;' face='Arial Unicode MS' color='#000000'&gt;全國違規事件&lt;br/&gt;管理儀表板&lt;/font&gt;" style="verticalAlign=middle;html=1;rounded=0;labelBackgroundColor=none;strokeColor=black;fillColor=none;strokeWidth=1;dashed=0;" parent="1" vertex="1">
+      <mxGeometry x="1344.61" y="166.31999999999996" width="102.0" height="38.00000000000003" as="geometry" />
+    </mxCell>
+    <mxCell id="node9" value="&lt;font style='font-size: 14.0px;' face='Arial Unicode MS' color='#000000'&gt;3.0&lt;br/&gt;資料分流&lt;/font&gt;" style="ellipse;aspect=fixed;verticalAlign=middle;html=1;rounded=0;labelBackgroundColor=none;strokeColor=black;fillColor=none;strokeWidth=1;dashed=0;" parent="1" vertex="1">
+      <mxGeometry x="675.8100000000001" y="4.169999999999995" width="104.3" height="104.3" as="geometry" />
+    </mxCell>
+    <mxCell id="node10" value="&lt;font style='font-size: 14.0px;' face='Arial Unicode MS' color='#000000'&gt;違規事件資料庫&lt;/font&gt;" style="verticalAlign=middle;html=1;rounded=0;labelBackgroundColor=none;strokeColor=black;fillColor=none;strokeWidth=1;dashed=0;" parent="1" vertex="1">
+      <mxGeometry x="669.96" y="181.31999999999996" width="116.0" height="36.00000000000003" as="geometry" />
+    </mxCell>
+    <mxCell id="node12" value="&lt;font style='font-size: 14.0px;' face='Arial Unicode MS' color='#000000'&gt;系統運作紀錄&lt;/font&gt;" style="verticalAlign=middle;html=1;rounded=0;labelBackgroundColor=none;strokeColor=black;fillColor=none;strokeWidth=1;dashed=0;" parent="1" vertex="1">
+      <mxGeometry x="1344.61" y="235.32" width="102.0" height="36.0" as="geometry" />
+    </mxCell>
+    <mxCell id="node13" value="&lt;font style='font-size: 14.0px;' face='Arial Unicode MS' color='#000000'&gt;6.0&lt;br/&gt;異常處理&lt;/font&gt;" style="ellipse;aspect=fixed;verticalAlign=middle;html=1;rounded=0;labelBackgroundColor=none;strokeColor=black;fillColor=none;strokeWidth=1;dashed=0;" parent="1" vertex="1">
+      <mxGeometry x="4.18" y="213.17" width="104.3" height="104.3" as="geometry" />
+    </mxCell>
+    <mxCell id="edge1" style="html=1;endArrow=block;dashed=0;endFill=1;startArrow=none;startFill=0;fillColor=black;strokeColor=black;strokeWidth=1;rounded=0;exitX=1.0000;exitY=0.5169;entryX=0.0000;entryY=0.4901;" parent="1" edge="1" source="node1" target="node2">
+      <mxGeometry as="geometry" relative="1">
+        <mxPoint x="93.57" y="177.92999999999998" as="sourcePoint" />
+        <mxPoint x="234.16" y="180.28999999999996" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="label_edge1" style="edgeLabel;html=1;align=center;verticalAlign=bottom;resizable=0;points=[];" parent="edge1" value="&lt;font style='font-size: 14.0px;' face='Arial Unicode MS' color='#000000'&gt;違規影像與數據&lt;/font&gt;" vertex="1" connectable="0">
+      <mxGeometry as="geometry" relative="1" />
+    </mxCell>
+    <mxCell id="edge3" style="html=1;endArrow=block;dashed=0;endFill=1;startArrow=none;startFill=0;fillColor=black;strokeColor=black;strokeWidth=1;rounded=0;exitX=1.0000;exitY=0.5000;entryX=0.0000;entryY=0.5000;" parent="1" edge="1" source="node2" target="node8">
+      <mxGeometry as="geometry" relative="1">
+        <mxPoint x="349.39" y="181.31999999999996" as="sourcePoint" />
+        <mxPoint x="433.1" y="181.31999999999996" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="label_edge3" style="edgeLabel;html=1;align=center;verticalAlign=bottom;resizable=0;points=[];" parent="edge3" value="&lt;font style='font-size: 14.0px;' face='Arial Unicode MS' color='#000000'&gt;原始資料&lt;/font&gt;" vertex="1" connectable="0">
+      <mxGeometry as="geometry" relative="1" />
+    </mxCell>
+    <mxCell id="edge2" style="html=1;endArrow=block;dashed=0;endFill=1;startArrow=none;startFill=0;fillColor=black;strokeColor=black;strokeWidth=1;rounded=0;exitX=1.0000;exitY=0.7414;entryX=0.0000;entryY=0.3822;" parent="1" edge="1" source="node3" target="node4">
+      <mxGeometry as="geometry" relative="1">
+        <mxPoint x="786.04" y="153.01" as="sourcePoint" />
+        <mxPoint x="904.5" y="173.02999999999997" as="targetPoint" />
+        <Array as="points">
+          <mxPoint x="889.96" y="170.31999999999996" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="label_edge2" style="edgeLabel;html=1;align=center;verticalAlign=bottom;resizable=0;points=[];" parent="edge2" value="&lt;font style='font-size: 14.0px;' face='Arial Unicode MS' color='#000000'&gt;車籍資訊&lt;/font&gt;" vertex="1" connectable="0">
+      <mxGeometry as="geometry" relative="1" />
+    </mxCell>
+    <mxCell id="edge8" style="html=1;endArrow=block;dashed=0;endFill=1;startArrow=none;startFill=0;fillColor=black;strokeColor=black;strokeWidth=1;rounded=0;exitX=1.0000;exitY=0.5000;entryX=0.0000;entryY=0.5000;" parent="1" edge="1" source="node4" target="node11">
+      <mxGeometry as="geometry" relative="1">
+        <mxPoint x="1018.53" y="185.31999999999996" as="sourcePoint" />
+        <mxPoint x="1107.55" y="185.31999999999996" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="label_edge8" style="edgeLabel;html=1;align=center;verticalAlign=bottom;resizable=0;points=[];" parent="edge8" value="&lt;font style='font-size: 14.0px;' face='Arial Unicode MS' color='#000000'&gt;確認結果&lt;/font&gt;" vertex="1" connectable="0">
+      <mxGeometry as="geometry" relative="1" />
+    </mxCell>
+    <mxCell id="edge4" style="html=1;endArrow=block;dashed=0;endFill=1;startArrow=none;startFill=0;fillColor=black;strokeColor=black;strokeWidth=1;rounded=0;exitX=1.0000;exitY=0.2647;entryX=0.0000;entryY=0.7826;" parent="1" edge="1" source="node8" target="node9">
+      <mxGeometry as="geometry" relative="1">
+        <mxPoint x="541.86" y="156.77999999999997" as="sourcePoint" />
+        <mxPoint x="672.65" y="85.79999999999998" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="label_edge4" style="edgeLabel;html=1;align=center;verticalAlign=bottom;resizable=0;points=[];" parent="edge4" value="&lt;font style='font-size: 14.0px;' face='Arial Unicode MS' color='#000000'&gt;標準化資料&lt;/font&gt;" vertex="1" connectable="0">
+      <mxGeometry as="geometry" relative="1" />
+    </mxCell>
+    <mxCell id="edge5" style="html=1;endArrow=block;dashed=0;endFill=1;startArrow=none;startFill=0;fillColor=black;strokeColor=black;strokeWidth=1;rounded=0;exitX=1.0000;exitY=0.5385;entryX=0.0000;entryY=0.3533;" parent="1" edge="1" source="node8" target="node10">
+      <mxGeometry as="geometry" relative="1">
+        <mxPoint x="548.03" y="185.33999999999997" as="sourcePoint" />
+        <mxPoint x="659.34" y="194.03999999999996" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="label_edge5" style="edgeLabel;html=1;align=center;verticalAlign=bottom;resizable=0;points=[];" parent="edge5" value="&lt;font style='font-size: 14.0px;' face='Arial Unicode MS' color='#000000'&gt;存儲違規資料&lt;/font&gt;" vertex="1" connectable="0">
+      <mxGeometry as="geometry" relative="1" />
+    </mxCell>
+    <mxCell id="edge6" style="html=1;endArrow=block;dashed=0;endFill=1;startArrow=none;startFill=0;fillColor=black;strokeColor=black;strokeWidth=1;rounded=0;exitX=1.0000;exitY=0.4459;entryX=0.0000;entryY=0.6836;" parent="1" edge="1" source="node9" target="node5">
+      <mxGeometry as="geometry" relative="1">
+        <mxPoint x="780.16" y="50.67999999999995" as="sourcePoint" />
+        <mxPoint x="905.01" y="36.92999999999995" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="label_edge6" style="edgeLabel;html=1;align=center;verticalAlign=bottom;resizable=0;points=[];" parent="edge6" value="&lt;font style='font-size: 14.0px;' face='Arial Unicode MS' color='#000000'&gt;一般案件&lt;/font&gt;" vertex="1" connectable="0">
+      <mxGeometry as="geometry" relative="1" />
+    </mxCell>
+    <mxCell id="edge7" style="html=1;endArrow=block;dashed=0;endFill=1;startArrow=none;startFill=0;fillColor=black;strokeColor=black;strokeWidth=1;rounded=0;exitX=1.0000;exitY=0.5742;entryX=0.0000;entryY=0.3203;" parent="1" edge="1" source="node9" target="node6">
+      <mxGeometry as="geometry" relative="1">
+        <mxPoint x="779.75" y="64.05999999999997" as="sourcePoint" />
+        <mxPoint x="897.89" y="77.84999999999997" as="targetPoint" />
+        <Array as="points">
+          <mxPoint x="803.96" y="67.31999999999996" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="label_edge7" style="edgeLabel;html=1;align=center;verticalAlign=bottom;resizable=0;points=[];" parent="edge7" value="&lt;font style='font-size: 14.0px;' face='Arial Unicode MS' color='#000000'&gt;特殊案件&lt;/font&gt;" vertex="1" connectable="0">
+      <mxGeometry as="geometry" relative="1" />
+    </mxCell>
+    <mxCell id="edge13" style="html=1;endArrow=block;dashed=0;endFill=1;startArrow=none;startFill=0;fillColor=black;strokeColor=black;strokeWidth=1;rounded=0;exitX=1.0000;exitY=0.4061;entryX=0.0000;entryY=0.5352;" parent="1" edge="1" source="node10" target="node4">
+      <mxGeometry as="geometry" relative="1">
+        <mxPoint x="786.08" y="195.94" as="sourcePoint" />
+        <mxPoint x="903.14" y="188.98999999999998" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="label_edge13" style="edgeLabel;html=1;align=center;verticalAlign=bottom;resizable=0;points=[];" parent="edge13" value="&lt;font style='font-size: 14.0px;' face='Arial Unicode MS' color='#000000'&gt;調取違規紀錄&lt;/font&gt;" vertex="1" connectable="0">
+      <mxGeometry as="geometry" relative="1" />
+    </mxCell>
+    <mxCell id="edge9" style="html=1;endArrow=block;dashed=0;endFill=1;startArrow=none;startFill=0;fillColor=black;strokeColor=black;strokeWidth=1;rounded=0;exitX=1.0000;exitY=0.5000;entryX=0.0000;entryY=0.5000;" parent="1" edge="1" source="node11" target="node7">
+      <mxGeometry as="geometry" relative="1">
+        <mxPoint x="1222.8" y="185.31999999999996" as="sourcePoint" />
+        <mxPoint x="1334.44" y="185.31999999999996" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="label_edge9" style="edgeLabel;html=1;align=center;verticalAlign=bottom;resizable=0;points=[];" parent="edge9" value="&lt;font style='font-size: 14.0px;' face='Arial Unicode MS' color='#000000'&gt;即時狀態&lt;/font&gt;" vertex="1" connectable="0">
+      <mxGeometry as="geometry" relative="1" />
+    </mxCell>
+    <mxCell id="edge10" style="html=1;endArrow=block;dashed=0;endFill=1;startArrow=none;startFill=0;fillColor=black;strokeColor=black;strokeWidth=1;rounded=0;exitX=1.0000;exitY=0.6439;entryX=0.0000;entryY=0.0000;" parent="1" edge="1" source="node11" target="node12">
+      <mxGeometry as="geometry" relative="1">
+        <mxPoint x="1220.57" y="200.32999999999998" as="sourcePoint" />
+        <mxPoint x="1334.48" y="235.01999999999998" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="label_edge10" style="edgeLabel;html=1;align=center;verticalAlign=bottom;resizable=0;points=[];" parent="edge10" value="&lt;font style='font-size: 14.0px;' face='Arial Unicode MS' color='#000000'&gt;紀錄處理結果&lt;/font&gt;" vertex="1" connectable="0">
+      <mxGeometry as="geometry" relative="1" />
+    </mxCell>
+    <mxCell id="edge11" style="html=1;endArrow=block;dashed=0;endFill=1;startArrow=none;startFill=0;fillColor=black;strokeColor=black;strokeWidth=1;rounded=0;exitX=1.0000;exitY=0.3360;entryX=0.0000;entryY=0.6957;" parent="1" edge="1" source="node13" target="node2">
+      <mxGeometry as="geometry" relative="1">
+        <mxPoint x="105.91" y="248.21999999999997" as="sourcePoint" />
+        <mxPoint x="237.99" y="201.72999999999996" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="label_edge11" style="edgeLabel;html=1;align=center;verticalAlign=bottom;resizable=0;points=[];" parent="edge11" value="&lt;font style='font-size: 14.0px;' face='Arial Unicode MS' color='#000000'&gt;重新處理&lt;/font&gt;" vertex="1" connectable="0">
+      <mxGeometry as="geometry" relative="1" />
+    </mxCell>
+    <mxCell id="edge12" style="html=1;endArrow=block;dashed=0;endFill=1;startArrow=none;startFill=0;fillColor=black;strokeColor=black;strokeWidth=1;curved=1;exitX=1.0000;exitY=0.5000;entryX=0.0000;entryY=0.6389;" parent="1" edge="1" source="node13" target="node12">
+      <mxGeometry as="geometry" relative="1">
+        <mxPoint x="109.0" y="265.32" as="sourcePoint" />
+        <mxPoint x="1334.38" y="258.32" as="targetPoint" />
+        <Array as="points">
+          <mxPoint x="295.98" y="265.32" />
+          <mxPoint x="1238.8055319148934" y="265.32" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="label_edge12" style="edgeLabel;html=1;align=center;verticalAlign=bottom;resizable=0;points=[];" parent="edge12" value="&lt;font style='font-size: 14.0px;' face='Arial Unicode MS' color='#000000'&gt;異常紀錄&lt;/font&gt;" vertex="1" connectable="0">
+      <mxGeometry as="geometry" relative="1" />
+    </mxCell>
+  </root>
+</mxGraphModel>

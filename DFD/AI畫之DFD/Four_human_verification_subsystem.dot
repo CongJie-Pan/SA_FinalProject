@@ -1,0 +1,49 @@
+digraph human_verification_subsystem {
+   // 圖形設定
+   rankdir=TB;
+   fontname="Microsoft JhengHei";
+   labelloc="t";
+   label="人工辨識子系統資料流程圖\n";
+   nodesep=0.8;
+   ranksep=1.0;
+   
+   // 節點設定
+   node [shape=circle, fixedsize=true, width=1.5, height=1.5, fontname="Microsoft JhengHei"];
+   process1 [label="1.\n案件\n接收"];
+   process2 [label="2.\n資料\n整理"];
+   process3 [label="3.\n人工\n審核"];
+   process4 [label="4.\n結果\n確認"];
+   process5 [label="5.\n資料\n轉發"];
+
+   // 外部實體
+   node [shape=box, fixedsize=false, width=2, height=0.8];
+   traffic_officer [label="交通佐理員"];
+   violation_system [label="違規處理子系統"];
+   vehicle_system [label="車籍資料子系統"];
+   
+   // 資料儲存
+   node [shape=record, width=2.5];
+   store1 [label="審核案件資料庫"];
+   store2 [label="參考資料庫"];
+   store3 [label="統計分析資料"];
+
+   // 資料流
+   edge [fontname="Microsoft JhengHei"];
+   violation_system -> process1 [label=" 待審核案件"];
+   vehicle_system -> process2 [label=" 車籍資料"];
+   process1 -> store1 [label=" 案件資料"];
+   store1 -> process2 [label=" 待審核資料"];
+   process2 -> process3 [label=" 整理後資料"];
+   store2 -> process3 [label=" 審核規範"];
+   traffic_officer -> process3 [label=" 專業判斷"];
+   process3 -> process4 [label=" 審核結果"];
+   process4 -> store1 [label=" 更新審核狀態"];
+   process4 -> store3 [label=" 審核統計"];
+   process4 -> process5 [label=" 確認結果"];
+   process5 -> violation_system [label=" 處理結果回傳"];
+
+   // 排版
+   {rank=same; violation_system vehicle_system}
+   {rank=same; store1 store2}
+   {rank=same; process3 traffic_officer}
+}

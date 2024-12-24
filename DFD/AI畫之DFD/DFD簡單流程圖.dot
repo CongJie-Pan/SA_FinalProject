@@ -1,0 +1,57 @@
+digraph DFD {
+    // 設定圖表整體屬性
+    graph [
+        rankdir=LR, 
+        nodesep=1.0, 
+        ranksep=1.0, 
+        fontsize=14, 
+        label="罰單超速處理系統", 
+        labelloc=top, 
+        fontname="Helvetica-Bold"
+    ];
+
+    // 節點樣式設置
+    node [
+        fontname="Helvetica", 
+        fontsize=12, 
+        shape=circle, 
+        fixedsize=true, 
+        width=1.2, 
+        height=1.2
+    ];
+
+    // 外部實體 (矩形)
+    ext_smart_pole [label="智慧燈桿", shape=rect, width=2.0, height=1.0, fixedsize=false];
+    ext_traffic_mgmt [label="交通管理單位", shape=rect, width=2.0, height=1.0, fixedsize=false];
+    ext_citizen [label="違規民眾", shape=rect, width=2.0, height=1.0, fixedsize=false];
+
+    // 資料儲存 (開放矩形)
+    ds_event_info [label="事件基本資料", shape=folder, width=2.0, height=1.0, fixedsize=false];
+    ds_vehicle_info [label="車輛資訊", shape=folder, width=2.0, height=1.0, fixedsize=false];
+    ds_ai_recognition [label="AI 辨識結果", shape=folder, width=2.0, height=1.0, fixedsize=false];
+    ds_processing_log [label="處理紀錄", shape=folder, width=2.0, height=1.0, fixedsize=false];
+    ds_ticket_info [label="罰單資訊", shape=folder, width=2.0, height=1.0, fixedsize=false];
+    ds_case_log [label="案件處理檔", shape=folder, width=2.0, height=1.0, fixedsize=false];
+
+    // 流程 (圓形)
+    p_event_handling [label="違規處理"];
+    p_plate_verification [label="車牌驗證"];
+    p_ai_recognition [label="AI 辨識"];
+    p_manual_review [label="人工審核"];
+    p_ticket_generation [label="罰單生成"];
+
+    // 資料流 (箭頭表示)
+    ext_smart_pole -> p_event_handling [label="  違規照片、地點、時間"];
+    p_event_handling -> ds_event_info [label="  儲存事件資料"];
+    p_event_handling -> p_plate_verification [label="  車牌號碼"];
+    p_event_handling -> p_ai_recognition [label="  違規影像"];
+    p_plate_verification -> ds_vehicle_info [label="  車主資訊"];
+    p_ai_recognition -> ds_ai_recognition [label="  辨識結果"];
+    p_ai_recognition -> p_manual_review [label="  辨識失敗數據"];
+    p_manual_review -> ds_processing_log [label="  處理紀錄"];
+    p_manual_review -> p_ticket_generation [label="  確認案件"];
+    p_ticket_generation -> ds_ticket_info [label="  罰單資料"];
+    p_ticket_generation -> ext_citizen [label="  通知罰單"];
+    ds_ticket_info -> ds_case_log [label="  更新案件"];
+    ds_case_log -> ext_traffic_mgmt [label="  報表數據"];
+}

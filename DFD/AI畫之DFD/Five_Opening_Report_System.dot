@@ -1,0 +1,61 @@
+digraph Opening_Report_System {
+   // 圖表設定
+   rankdir=TB;
+   nodesep=0.8;
+   ranksep=1.0;
+   
+   // 標題設定
+   labelloc="t";
+   label="開單舉報子系統資料流程圖\n";
+   fontsize=16;
+   fontname="Microsoft JhengHei";
+
+   // 節點預設設定
+   node [fontname="Microsoft JhengHei", margin=0.3];
+   edge [fontname="Microsoft JhengHei"];
+
+   // 外部實體 (矩形)
+   node [shape=box, fixedsize=true, width=2, height=0.8];
+   MONITOR [label="監理單位"];
+   POST [label="郵務系統"]; 
+   TRAFFIC [label="交通管理單位"];
+   VIOLATOR [label="違規民眾"];
+   OFFICER [label="交通佐理員"];
+
+   // 處理程序 (圓形)
+   node [shape=circle, fixedsize=true, width=2.2];
+   P1 [label=" 資料接收\n與確認"];
+   P2 [label=" 通知書\n產生"];
+   P3 [label=" 特殊案件\n審核"];
+   P4 [label=" 通知發送\n管理"];
+   P5 [label=" 狀態追蹤"];
+
+   // 資料儲存 (開放式矩形)
+   node [shape=record, fixedsize=false, width=2.5];
+   DS1 [label="舉發紀錄庫"];
+   DS2 [label="法規資料庫"];
+   DS3 [label="統計分析資料"];
+
+   // 資料流向
+   MONITOR -> P1 [label=" 車籍資料"];
+   P1 -> DS1 [label=" 違規資訊"];
+   TRAFFIC -> DS2 [label=" 法規更新"];
+   DS2 -> P2 [label=" 法規依據"];
+   DS1 -> P2 [label=" 違規詳情"];
+   P2 -> P3 [label=" 異常案件"];
+   OFFICER -> P3 [label=" 人工審核"];
+   P3 -> P2 [label=" 審核結果"];
+   P2 -> P4 [label=" 通知書"];
+   P4 -> POST [label=" 郵寄資料"];
+   POST -> P5 [label=" 送達狀態"];
+   P5 -> DS3 [label=" 處理結果"];
+   P5 -> VIOLATOR [label=" 舉發通知"];
+   DS3 -> TRAFFIC [label=" 統計報表"];
+
+   // 排版調整
+   {rank=same; MONITOR TRAFFIC}
+   {rank=same; P1 P2 P3}
+   {rank=same; DS1 DS2}
+   {rank=same; P4 P5}
+   {rank=same; POST VIOLATOR}
+}

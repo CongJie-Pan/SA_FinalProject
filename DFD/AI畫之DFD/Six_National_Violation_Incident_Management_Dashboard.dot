@@ -1,0 +1,59 @@
+digraph DFD {
+   // 圖形設定
+   rankdir=TB;
+   nodesep=0.8;
+   ranksep=1.0;
+   splines=ortho;
+   
+   // 標題
+   label="全國違規事件管理儀表板系統\n資料流程圖";
+   labelloc="t";
+   fontsize=20;
+   fontname="Microsoft JhengHei";
+
+   // 節點樣式設定
+   node [fontname="Microsoft JhengHei"];
+   edge [fontname="Microsoft JhengHei"];
+   
+   // 外部實體 (矩形)
+   traffic_dept [shape=box, label="交通管理單位", fixedsize=true, width=2, height=1];
+   monitor_dept [shape=box, label="監理單位", fixedsize=true, width=2, height=1];
+   police [shape=box, label="執法人員", fixedsize=true, width=2, height=1];
+   service [shape=box, label="民眾服務窗口", fixedsize=true, width=2, height=1];
+
+   // 處理程序 (圓形)
+   collect [shape=circle, label=" 資料\n收集", fixedsize=true, width=1.5, height=1.5];
+   analyze [shape=circle, label=" 資料\n分析", fixedsize=true, width=1.5, height=1.5];
+   report [shape=circle, label=" 報表\n產出", fixedsize=true, width=1.5, height=1.5];
+   monitor [shape=circle, label=" 效能\n監控", fixedsize=true, width=1.5, height=1.5];
+
+   // 資料儲存 (開放式矩形)
+   case_db [shape=record, label="違規案件主檔"];
+   analysis_db [shape=record, label="分析資料庫"];
+   report_db [shape=record, label="報表資料庫"];
+   log_db [shape=record, label="使用記錄"];
+
+   // 資料流向
+   traffic_dept -> collect [label=" 違規事件資料"];
+   monitor_dept -> collect [label=" 車籍資訊"];
+   collect -> case_db [label=" 儲存案件"];
+   collect -> analyze [label=" 原始資料"];
+   
+   analyze -> analysis_db [label=" 分析結果"];
+   analysis_db -> report [label=" 統計資料"];
+   report -> report_db [label=" 報表儲存"];
+   
+   case_db -> monitor [label=" 案件狀態"];
+   monitor -> log_db [label=" 系統紀錄"];
+   
+   report_db -> traffic_dept [label=" 管理報表"];
+   report_db -> police [label=" 執法報告"];
+   monitor -> service [label=" 案件查詢"];
+
+   // 排版調整
+   {rank=same; traffic_dept monitor_dept}
+   {rank=same; collect analyze}
+   {rank=same; case_db analysis_db}
+   {rank=same; report monitor}
+   {rank=same; police service}
+}

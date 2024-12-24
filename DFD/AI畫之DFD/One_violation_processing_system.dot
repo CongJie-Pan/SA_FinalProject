@@ -1,0 +1,52 @@
+digraph violation_processing_system {
+	/* 違規處理子系統 */
+   /* Graph styling */
+   rankdir=LR;
+   node [fontname="Arial Unicode MS"];
+   edge [fontname="Arial Unicode MS"];
+   
+   /* External entities - rectangles */
+   node [shape=box, style=solid];
+   smart_pole [label="智慧燈桿"];
+   vehicle_db [label="車籍資料子系統"];
+   ai_system [label="AI辨識子系統"];
+   manual_system [label="人工辨識子系統"];
+   dashboard [label="全國違規事件\n管理儀表板"];
+
+   /* Processes - circles */
+   node [shape=circle];
+   receive [label="1.0\n資料接收"];
+   process [label="2.0\n初步處理"];
+   route [label="3.0\n資料分流"];
+   verify [label="4.0\n資料確認"];
+   update [label="5.0\n結果更新"];
+   error [label="6.0\n異常處理"];
+
+   /* Data stores - open rectangles */
+   node [shape=record];
+   event_db [label="違規事件資料庫"];
+   system_log [label="系統運作紀錄"];
+
+   /* Data flows */
+   smart_pole -> receive [label="違規影像與數據"];
+   receive -> process [label="原始資料"];
+   process -> route [label="標準化資料"];
+   
+   route -> ai_system [label="一般案件"];
+   route -> manual_system [label="特殊案件"];
+   
+   vehicle_db -> verify [label="車籍資訊"];
+   verify -> update [label="確認結果"];
+   
+   /* Data store interactions */
+   process -> event_db [label="存儲違規資料"];
+   event_db -> verify [label="調取違規紀錄"];
+   update -> system_log [label="紀錄處理結果"];
+   
+   /* Error handling */
+   error -> system_log [label="異常紀錄"];
+   error -> receive [label="重新處理"];
+   
+   /* Dashboard updates */
+   update -> dashboard [label="即時狀態"];
+}
