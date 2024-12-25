@@ -26,6 +26,7 @@ CREATE TABLE ViolationInfo (
 CREATE TABLE VehicleInfo (
     ViolationID INT NOT NULL,
     LicensePlate CHAR(10) COMMENT '車牌號碼',
+    vehicleRegisterName CHAR(10) COMMENT '車輛登記人'
     VehicleType CHAR(20) COMMENT '車型',
     VehicleColor CHAR(20) COMMENT '車輛顏色',
     RegistrationStatus BOOLEAN COMMENT '車籍資料匹配確認狀態',

@@ -13,11 +13,11 @@ VALUES
 (3, '一般道路', '闖紅燈', NULL, NULL);
 
 -- 插入 VehicleInfo 資料
-INSERT INTO VehicleInfo (ViolationID, LicensePlate, VehicleType, VehicleColor, RegistrationStatus)
+INSERT INTO VehicleInfo (ViolationID, LicensePlate, VehicleType, VehicleColor, RegistrationStatus, vehicleRegisterName)
 VALUES
-(1, 'ABC1234', '小客車', '黑色', TRUE),
-(2, 'XYZ5678', '休旅車', '白色', TRUE),
-(3, 'DEF4321', '機車', '紅色', TRUE);
+(1, 'ABC1234', '小客車', '黑色', TRUE, '張三'),
+(2, 'XYZ5678', '休旅車', '白色', TRUE, '李四'),
+(3, 'DEF4321', '機車', '紅色', TRUE, '王五');
 
 -- 插入 AIRecognition 資料
 INSERT INTO AIRecognition (ViolationID, AILicensePlate, AIVehicleType, AIVehicleColor, RecognitionResult, ErrorType)
