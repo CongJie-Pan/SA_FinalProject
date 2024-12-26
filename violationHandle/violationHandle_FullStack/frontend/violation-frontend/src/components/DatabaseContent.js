@@ -91,7 +91,7 @@ const DatabaseContent = () => {
             boxSizing: 'border-box',
             minHeight: '100vh',
         }}>
-            <h1>數據庫內容</h1>
+            <h1>資料庫內容預覽</h1>
             {renderViolationsList()}
             {renderTicketsList()}
         </div>

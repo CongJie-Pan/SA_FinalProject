@@ -1,5 +1,5 @@
 /* 這些代碼片段展示了一個使用 Express 框架構建的 Node.js 應用程序
-該應用程序設置了多個 API 路由來處理違規和罰單數據，並與 MySQL 數據庫進行交互。
+該應用程序設置了多個 API 路由來處理違規和罰單數據，並與 MySQL 資料庫進行交互。
 app.js 配置了中介軟體和靜態資源，server.js 啟動了服務器並處理生產和開發模式下的靜態資源。
 database.js 則設置了 MySQL 連接池，violationRoutes.js 定義了違規相關的 API 路由。*/
 

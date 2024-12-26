@@ -109,7 +109,7 @@ const App = () => {
         }}>
             <h1 style={{ marginBottom: '20px' }}>違規處理系統</h1>
             <button onClick={toggleDatabaseContent}>
-                {showDatabaseContent ? '返回主頁' : '查看數據庫內容'}
+                {showDatabaseContent ? '返回主頁' : '預覽資料庫內容'}
             </button>
 
             {showDatabaseContent ? (
