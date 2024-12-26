@@ -1,30 +1,12 @@
-/*
-const path = require('path');
-const express = require('express');
-const app = require('./app'); // 後端應用實例
-
-const PORT = process.env.PORT || 3000;
-
-// 提供靜態資源
-app.use(express.static(path.join(__dirname, '../../frontend/violation-frontend/build')));
-
-// 處理未匹配的路由，返回前端的 index.html
-app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../../frontend/violation-frontend/build', 'index.html'));
-});
-
-// 啟動伺服器
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
-*/
-
 const path = require('path');
 const express = require('express');
 const app = require('./app');
+
+/* API 連接部分 */
 require('dotenv').config();
 
-const PORT = process.env.PORT || 3000;
+// API 連接部分的接口 3001
+const PORT = process.env.PORT || 3001;
 
 if (process.env.NODE_ENV === 'production') {
     // 僅在生產模式提供靜態資源

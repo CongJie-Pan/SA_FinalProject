@@ -4,7 +4,7 @@ const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
     password: '1234',
-    database: 'SA_Final_PJ',
+    database: 'sa_final_pj', // 此處需要是小寫
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0
