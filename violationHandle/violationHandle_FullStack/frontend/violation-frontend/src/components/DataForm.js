@@ -1,14 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const DataForm = ({ onSubmit, onImageUpload }) => {
+    const [formData, setFormData] = useState({
+        deviceID: '',
+        captureTime: '',
+        captureLocation: '',
+    });
+
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         onImageUpload(file); // 即時預覽圖片
     };
 
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevData => ({
+            ...prevData,
+            [name]: value
+        }));
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSubmit(); // 提交表單並模擬結果
+        onSubmit(formData); // 提交表單數據
     };
 
     return (
@@ -25,8 +39,38 @@ const DataForm = ({ onSubmit, onImageUpload }) => {
             }}
         >
             <label>
+                設備 ID：
+                <input
+                    type="text"
+                    name="deviceID"
+                    value={formData.deviceID}
+                    onChange={handleInputChange}
+                    required
+                />
+            </label>
+            <label>
+                拍攝時間：
+                <input
+                    type="datetime-local"
+                    name="captureTime"
+                    value={formData.captureTime}
+                    onChange={handleInputChange}
+                    required
+                />
+            </label>
+            <label>
+                拍攝地點：
+                <input
+                    type="text"
+                    name="captureLocation"
+                    value={formData.captureLocation}
+                    onChange={handleInputChange}
+                    required
+                />
+            </label>
+            <label>
                 上傳車牌圖像：
-                <input type="file" name="uploadedImage" onChange={handleFileChange} />
+                <input type="file" name="uploadedImage" onChange={handleFileChange} required />
             </label>
             <button
                 type="submit"

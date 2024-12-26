@@ -1,48 +1,33 @@
-// src/controllers/aiController.js
-
-// 引入必要模組
-const axios = require('axios');
 const db = require('../config/database');
+const { generateContentWithBase64Image } = require('../services/aiService');
 
-// AI 辨識處理邏輯
 exports.recognizePlate = async (req, res) => {
     const { ViolationID, ViolationImage } = req.body;
 
     try {
-        // 呼叫 Object Detection Agent
-        const detectionResponse = await axios.post('http://localhost:8000/object-detection', {
-            image: ViolationImage,
-        });
+        const prompt = "請辨識這張圖片中的車牌號碼，只需要回覆車牌號碼，不需要其他說明。";
 
-        if (!detectionResponse.data.success) {
-            throw new Error('目標偵測失敗');
-        }
+        console.log('Sending image to AI for recognition...');
+        const result = await generateContentWithBase64Image(prompt, ViolationImage);
+        console.log('AI recognition result:', result);
 
-        const croppedImage = detectionResponse.data.croppedImage;
-
-        // 呼叫 OCR Agent
-        const ocrResponse = await axios.post('http://localhost:8000/ocr', {
-            image: croppedImage,
-        });
-
-        if (!ocrResponse.data.success) {
-            throw new Error('文字辨識失敗');
-        }
-
-        const licensePlate = ocrResponse.data.licensePlate;
+        const aiLicensePlate = result.trim();
+        console.log('Extracted license plate:', aiLicensePlate);
 
         // 儲存辨識結果至資料庫
-        await db.query('INSERT INTO AIRecognition (ViolationID, LicensePlate, Status) VALUES (?, ?, ?)', [
-            ViolationID,
-            licensePlate,
-            '成功',
-        ]);
+        const [insertResult] = await db.query(
+            'INSERT INTO AIRecognition (ViolationID, AILicensePlate) VALUES (?, ?)',
+            [ViolationID, aiLicensePlate, '成功']
+        );
+        console.log('Inserted into database with ID:', insertResult.insertId);
 
         res.status(200).json({
             success: true,
-            licensePlate,
+            aiLicensePlate,
+            insertId: insertResult.insertId
         });
     } catch (error) {
+        console.error('Error in recognizePlate:', error);
         res.status(500).json({
             success: false,
             message: error.message,

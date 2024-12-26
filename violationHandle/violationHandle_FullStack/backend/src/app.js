@@ -13,6 +13,9 @@ const ticketRoutes = require('./routes/ticketRoutes');
 const violationRoutes = require('./routes/violationRoutes');
 const aiRoutes = require('./routes/aiRoutes');
 
+
+//router.post('/recognize-plate', aiController.recognizePlate);
+
 const app = express();
 
 // 使用中介軟體
@@ -22,6 +25,7 @@ app.use(cors());
 // 使用路由
 app.use('/api/violations', violationRoutes);
 app.use('/api/tickets', ticketRoutes);
+app.use('/api/ai', aiRoutes);
 
 // 靜態資源配置
 // 指定靜態文件目錄，指向 React 的 build 資料夾
