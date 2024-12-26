@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const pool = require('../config/database');
+const db = require('../models/db');
 
 // GET all violations
 router.get('/', async (req, res) => {
     try {
-        const [rows] = await pool.query('SELECT * FROM EventBasicInfo');
+        const [rows] = await db.query('SELECT * FROM EventBasicInfo');
         res.json(rows);
     } catch (error) {
         console.error('Error fetching violations:', error);
@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
     const { deviceID, captureTime, captureLocation } = req.body;
     try {
-        const [result] = await pool.query(
+        const [result] = await db.query(
             'INSERT INTO EventBasicInfo (DeviceID, CaptureTime, CaptureLocation) VALUES (?, ?, ?)',
             [deviceID, captureTime, captureLocation]
         );

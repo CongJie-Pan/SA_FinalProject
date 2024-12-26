@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const pool = require('../config/database');
+const db = require('../models/db');
 
 // GET all tickets
 router.get('/', async (req, res) => {
     try {
-        const [rows] = await pool.query('SELECT * FROM TicketInfo');
+        const [rows] = await db.query('SELECT * FROM Ticket');
         res.json(rows);
     } catch (error) {
         console.error('Error fetching tickets:', error);
@@ -15,11 +15,11 @@ router.get('/', async (req, res) => {
 
 // POST a new ticket
 router.post('/', async (req, res) => {
-    const { ViolationID, FineAmount } = req.body;
+    const { violationID, licensePlate, amount } = req.body;
     try {
-        const [result] = await pool.query(
-            'INSERT INTO TicketInfo (ViolationID, FineAmount, CompletionTime, NotificationStatus) VALUES (?, ?, NOW(), false)',
-            [ViolationID, FineAmount]
+        const [result] = await db.query(
+            'INSERT INTO Ticket (ViolationID, LicensePlate, Amount) VALUES (?, ?, ?)',
+            [violationID, licensePlate, amount]
         );
         res.status(201).json({ id: result.insertId, message: 'Ticket added successfully' });
     } catch (error) {

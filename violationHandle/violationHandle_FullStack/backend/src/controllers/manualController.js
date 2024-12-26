@@ -1,6 +1,6 @@
 // src/controllers/manualController.js
 
-const db = require('../models/db');
+const db = require('../config/database');
 
 // 人工辨識 - 更新資料
 exports.updateManualReview = async (req, res) => {

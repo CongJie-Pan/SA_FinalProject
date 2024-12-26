@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import DataForm from './components/DataForm';
 import ResultDisplay from './components/ResultDisplay';
@@ -12,8 +12,71 @@ const App = () => {
     const [comparisonStatus, setComparisonStatus] = useState(null);
     const [resultData, setResultData] = useState(null);
     const [showTicketPage, setShowTicketPage] = useState(false); // 控制是否顯示罰單頁面
+    const [violations, setViolations] = useState([]);
+    const [tickets, setTickets] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    const handleFormSubmit = async (formData) => { // 修改這個函數
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            try {
+                const [violationsResponse, ticketsResponse] = await Promise.all([
+                    axios.get('http://localhost:3001/api/violations'),
+                    axios.get('http://localhost:3001/api/tickets')
+                ]);
+                setViolations(violationsResponse.data);
+                setTickets(ticketsResponse.data);
+                setError(null);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                if (error.response) {
+                    // 請求已發出，但服務器回應狀態碼不在 2xx 範圍內
+                    console.error('Response data:', error.response.data);
+                    console.error('Response status:', error.response.status);
+                    setError(`服務器錯誤: ${error.response.status}`);
+                } else if (error.request) {
+                    // 請求已發出，但沒有收到回應
+                    console.error('No response received');
+                    setError('無法連接到服務器');
+                } else {
+                    // 在設置請求時發生了一些錯誤
+                    console.error('Error message:', error.message);
+                    setError(`請求錯誤: ${error.message}`);
+                }
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        const fetchViolations = async () => {
+            try {
+                const response = await axios.get('http://localhost:3001/api/violations');
+                setViolations(response.data);
+            } catch (error) {
+                console.error('Error fetching violations:', error);
+                setError('無法載入違規事件數據');
+            }
+        };
+
+        const fetchTickets = async () => {
+            try {
+                const response = await axios.get('http://localhost:3001/api/tickets');
+                setTickets(response.data);
+            } catch (error) {
+                console.error('Error fetching tickets:', error);
+                setError('無法載入罰單數據');
+            }
+        };
+
+        fetchData();
+        fetchViolations();
+        fetchTickets();
+    }, []);
+
+
+
+    const handleFormSubmit = async (formData) => {
         try {
             // 發送請求到後端API
             const response = await axios.post('http://localhost:3001/api/violations', {
@@ -22,10 +85,10 @@ const App = () => {
                 captureLocation: formData.captureLocation,
                 // 添加其他需要的字段
             });
-            
+
             // 處理後端返回的數據
             const { id } = response.data;
-            
+
             // 模擬 AI 辨識和車牌驗證結果（這部分可以保留，直到實際的 AI 系統準備就緒）
             const aiResult = {
                 licensePlate: 'ABC1234',
@@ -44,6 +107,9 @@ const App = () => {
 
             // 更新舉發 ID
             setViolationID(`0${id}`);
+
+            // 更新違規事件列表
+            setViolations(prevViolations => [...prevViolations, response.data]);
         } catch (error) {
             console.error('Error submitting form:', error);
             // 處理錯誤情況
@@ -58,6 +124,48 @@ const App = () => {
     const handleNavigateToTicket = () => {
         setShowTicketPage(true); // 顯示罰單頁面
     };
+
+    const renderViolationsList = () => (
+        <div style={{ marginTop: '20px', width: '100%', maxWidth: '600px' }}>
+            <h2>違規事件列表</h2>
+            {loading ? (
+                <p>載入中...</p>
+            ) : error ? (
+                <p style={{ color: 'red' }}>{error}</p>
+            ) : violations.length === 0 ? (
+                <p>目前沒有違規事件。</p>
+            ) : (
+                <ul>
+                    {violations.map(violation => (
+                        <li key={violation.id}>
+                            ID: {violation.id}, 地點: {violation.captureLocation}, 時間: {violation.captureTime}
+                        </li>
+                    ))}
+                </ul>
+            )}
+        </div>
+    );
+
+    const renderTicketsList = () => (
+        <div style={{ marginTop: '20px', width: '100%', maxWidth: '600px' }}>
+            <h2>罰單列表</h2>
+            {loading ? (
+                <p>載入中...</p>
+            ) : error ? (
+                <p style={{ color: 'red' }}>{error}</p>
+            ) : tickets.length === 0 ? (
+                <p>目前沒有罰單。</p>
+            ) : (
+                <ul>
+                    {tickets.map(ticket => (
+                        <li key={ticket.id}>
+                            罰單號: {ticket.id}, 車牌: {ticket.licensePlate}, 金額: {ticket.amount}
+                        </li>
+                    ))}
+                </ul>
+            )}
+        </div>
+    );
 
     return (
         <div
@@ -78,49 +186,21 @@ const App = () => {
                         <DataForm onSubmit={handleFormSubmit} onImageUpload={handleImageUpload} />
                     </div>
                     {previewImage && (
-                        <div
-                            style={{
-                                marginTop: '20px',
-                                padding: '10px',
-                                border: '1px solid #ccc',
-                                borderRadius: '8px',
-                                width: '100%',
-                                maxWidth: '600px',
-                                backgroundColor: '#f9f9f9',
-                                textAlign: 'center',
-                            }}
-                        >
-                            <h3>圖像預覽：</h3>
-                            <img
-                                src={previewImage}
-                                alt="Uploaded Preview"
-                                style={{ width: '200px', height: 'auto' }}
-                            />
-                        </div>
-                    )}
-                    {resultData && (
-                        <ResultDisplay
-                            aiResult={resultData.aiResult}
-                            verificationResult={resultData.verificationResult}
-                            comparisonStatus={comparisonStatus}
+                        <img
+                            src={previewImage}
+                            alt="Preview"
+                            style={{ maxWidth: '100%', maxHeight: '300px', marginTop: '20px' }}
                         />
                     )}
-                    {comparisonStatus === '數據無誤，結果一致' && (
-                        <button
-                            onClick={handleNavigateToTicket}
-                            style={{
-                                marginTop: '20px',
-                                padding: '10px 20px',
-                                backgroundColor: '#4CAF50',
-                                color: 'white',
-                                border: 'none',
-                                borderRadius: '5px',
-                                cursor: 'pointer',
-                            }}
-                        >
-                            前往罰單頁面
-                        </button>
+                    {comparisonStatus && (
+                        <div style={{ marginTop: '20px', textAlign: 'center' }}>
+                            <p>{comparisonStatus}</p>
+                            {resultData && <ResultDisplay data={resultData} />}
+                            <button onClick={handleNavigateToTicket}>生成罰單</button>
+                        </div>
                     )}
+                    {renderViolationsList()}
+                    {renderTicketsList()}
                 </>
             ) : (
                 <TicketPage />

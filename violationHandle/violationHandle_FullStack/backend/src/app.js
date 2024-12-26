@@ -17,6 +17,10 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
+// 使用路由
+app.use('/api/violations', violationRoutes);
+app.use('/api/tickets', ticketRoutes);
+
 // 靜態資源配置
 // 指定靜態文件目錄，指向 React 的 build 資料夾
 app.use(express.static(path.join(__dirname, '../../frontend/violation-frontend/build')));

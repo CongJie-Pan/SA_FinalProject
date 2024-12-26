@@ -2,7 +2,7 @@
 
 // 引入必要模組
 const axios = require('axios');
-const db = require('../models/db');
+const db = require('../config/database');
 
 // AI 辨識處理邏輯
 exports.recognizePlate = async (req, res) => {

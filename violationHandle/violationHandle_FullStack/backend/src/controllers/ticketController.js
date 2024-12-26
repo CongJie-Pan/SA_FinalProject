@@ -1,6 +1,6 @@
 // src/controllers/ticketController.js
 
-const db = require('../models/db');
+const db = require('../config/database');
 
 // 生成罰單
 exports.generateTicket = async (req, res) => {

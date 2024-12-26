@@ -1,6 +1,6 @@
 // src/controllers/violationController.js
 
-const db = require('../models/db');
+const db = require('../config/database');
 
 // 接收違規數據
 exports.addViolation = async (req, res) => {
