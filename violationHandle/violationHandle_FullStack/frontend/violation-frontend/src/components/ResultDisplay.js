@@ -21,7 +21,7 @@ const ResultDisplay = ({ aiResult, verificationResult, comparisonStatus }) => {
             {needsManualReview ? (
                 <>
                     <p>車牌號碼：需要人工辨識</p>
-                    <p>原因：{aiResult.reason || '無法自動辨識'}</p>
+                    <p>原因：{aiResult.reason || '太模糊或偵測1個以上車牌，無法順利辨識'}</p>
                 </>
             ) : (
                 <p>車牌號碼：{aiResult.licensePlate || '無法辨識'}</p>
@@ -45,6 +45,8 @@ const ResultDisplay = ({ aiResult, verificationResult, comparisonStatus }) => {
                     <p style={{ fontWeight: 'bold' }}>{comparisonStatus}</p>
                 </>
             )}
+
+
         </div>
     );
 };

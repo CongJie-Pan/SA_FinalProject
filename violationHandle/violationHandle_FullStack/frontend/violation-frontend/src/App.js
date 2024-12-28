@@ -20,6 +20,9 @@ const App = () => {
     const [showDatabaseContent, setShowDatabaseContent] = useState(false);
     const [processStatus, setProcessStatus] = useState('');
 
+    // 確認違規是否已確認
+    const [isViolationConfirmed, setIsViolationConfirmed] = useState(false);
+
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
@@ -92,7 +95,7 @@ const App = () => {
 
             const isMatch = verificationResult ? (recognizedPlate === verificationResult.LicensePlate) : false;
 
-            setComparisonStatus(isMatch ? '資訊無誤，結果一致' : '資訊不匹配或未找到車輛資訊，請重新確認');
+            setComparisonStatus(isMatch ? '資訊無誤，結果一致' : '資訊不匹配或未找到車輛資訊，請重新確認，或可能是假車牌，向警政機關報案。');
             setResultData({
                 aiResult: { licensePlate: recognizedPlate },
                 verificationResult: verificationResult ? {
@@ -151,6 +154,19 @@ const App = () => {
 
     const handleNavigateToTicket = () => {
         setShowTicketPage(true);
+    };
+
+    const handleManualReview = (action) => {
+        if (action === 'reject') {
+            setProcessStatus('❌ 駁回違規️');
+            setIsViolationConfirmed(false);
+        } else if (action === 'confirm') {
+            setProcessStatus('✅ 確認違規');
+            setIsViolationConfirmed(true);
+        }
+        // 清除結果數據和比較狀態
+        //setResultData(null);
+        //setComparisonStatus(null);
     };
 
     const toggleDatabaseContent = () => {
@@ -216,7 +232,43 @@ const App = () => {
                         />
                     )}
 
-                    {comparisonStatus && (
+                    {resultData && resultData.aiResult.licensePlate === '需要人工辨識' && (
+                        <div style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            gap: '20px',
+                            marginTop: '20px'
+                        }}>
+                            <button
+                                onClick={() => handleManualReview('reject')}
+                                style={{
+                                    padding: '10px 20px',
+                                    backgroundColor: '#f44336',
+                                    color: 'white',
+                                    border: 'none',
+                                    borderRadius: '5px',
+                                    cursor: 'pointer',
+                                }}
+                            >
+                                駁回
+                            </button>
+                            <button
+                                onClick={() => handleManualReview('confirm')}
+                                style={{
+                                    padding: '10px 20px',
+                                    backgroundColor: '#4CAF50',
+                                    color: 'white',
+                                    border: 'none',
+                                    borderRadius: '5px',
+                                    cursor: 'pointer',
+                                }}
+                            >
+                                確認違規
+                            </button>
+                        </div>
+                    )}
+
+                    {(comparisonStatus === '資訊無誤，結果一致' || isViolationConfirmed === true) && (
                         <button onClick={handleNavigateToTicket} style={{
                             marginTop: '10px',
                             padding: '10px 20px',
@@ -230,7 +282,7 @@ const App = () => {
                         </button>
                     )}
 
-                    {showTicketPage && <TicketPage />}
+
                 </>
             )}
         </div>
