@@ -68,25 +68,38 @@ const App = () => {
             // 更新這部分以使用正確的屬性名
             const recognizedPlate = aiResult.aiLicensePlate;
 
-            // 模擬車牌驗證結果（實際應用中應該從後端獲取）
+            // 實際車牌驗證API
             setProcessStatus('正在驗證車牌資訊...');
-            const verificationResult = {
-                licensePlate: recognizedPlate,  // 使用 AI 辨識的結果
-                vehicleType: '小客車',
-                vehicleColor: '黑色',
-                vehicleRegisterName: '張三',
-            };
+            let verificationResult;
+            try {
+                const verificationResponse = await axios.get(`http://localhost:3001/api/vehicleInfo/${recognizedPlate}`);
+                verificationResult = verificationResponse.data;
+            } catch (error) {
+                console.error('Error fetching vehicle info:', error);
+                verificationResult = null;
+            }
 
-            const isMatch = recognizedPlate === verificationResult.licensePlate;
+            const isMatch = verificationResult ? (recognizedPlate === verificationResult.LicensePlate) : false;
 
-            setComparisonStatus(isMatch ? '數據無誤，結果一致' : '數據不匹配，請重新確認');
+            setComparisonStatus(isMatch ? '資訊無誤，結果一致' : '資訊不匹配或未找到車輛資訊，請重新確認');
             setResultData({
-                aiResult: { licensePlate: recognizedPlate },  // 更新這裡
-                verificationResult,
+                aiResult: { licensePlate: recognizedPlate },
+                verificationResult: verificationResult ? {
+                    LicensePlate: verificationResult.LicensePlate,
+                    VehicleType: verificationResult.VehicleType,
+                    VehicleColor: verificationResult.VehicleColor,
+                    VehicleRegisterName: verificationResult.VehicleRegisterName
+                } : {
+                    LicensePlate: '',
+                    VehicleType: '',
+                    VehicleColor: '',
+                    VehicleRegisterName: ''
+                },
             });
 
             setViolations(prevViolations => [...prevViolations, violationResponse.data]);
             setProcessStatus('處理完成');
+
         } catch (error) {
             console.error('Error submitting form:', error);
             console.error('Form data:', formData);

@@ -12,6 +12,7 @@ const manualRoutes = require('./routes/manualRoutes');
 const ticketRoutes = require('./routes/ticketRoutes');
 const violationRoutes = require('./routes/violationRoutes');
 const aiRoutes = require('./routes/aiRoutes');
+const vehicleInfoRoutes = require('./api/vehicleInfo');
 
 
 //router.post('/recognize-plate', aiController.recognizePlate);
@@ -26,6 +27,7 @@ app.use(cors());
 app.use('/api/violations', violationRoutes);
 app.use('/api/tickets', ticketRoutes);
 app.use('/api/ai', aiRoutes);
+app.use('/api/vehicleInfo', vehicleInfoRoutes);
 
 // 靜態資源配置
 // 指定靜態文件目錄，指向 React 的 build 資料夾
