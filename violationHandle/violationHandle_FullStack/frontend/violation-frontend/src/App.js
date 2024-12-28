@@ -65,6 +65,17 @@ const App = () => {
             const aiResult = aiResponse.data;
             setProcessStatus('AI 辨識完成');
 
+            // 檢查 AI 辨識結果
+            if (aiResult.needsManualReview) {
+                setComparisonStatus('需要人工辨識');
+                setResultData({
+                    aiResult: { licensePlate: '需要人工辨識', reason: aiResult.reason },
+                    verificationResult: null
+                });
+                setProcessStatus('AI 辨識結果：需要人工辨識');
+                return; // 提前結束函數執行
+            }
+
             // 更新這部分以使用正確的屬性名
             const recognizedPlate = aiResult.aiLicensePlate;
 
@@ -110,6 +121,13 @@ const App = () => {
                 console.error('Response data:', error.response.data);
                 console.error('Response status:', error.response.status);
                 setProcessStatus(`處理錯誤: ${error.response.status} - ${error.response.data.message || '未知錯誤'}`);
+                // 將未知錯誤轉為需要人工審核
+                setComparisonStatus('需要人工辨識');
+                setResultData({
+                    aiResult: { licensePlate: '需要人工辨識', reason: '有兩個以上車牌或其他錯誤，需要人工審核' },
+                    verificationResult: null
+                });
+                setProcessStatus('AI 辨識結果：需要人工辨識');
             } else if (error.request) {
                 console.error('No response received');
                 setProcessStatus('處理錯誤: 無法連接到服務器');
@@ -194,6 +212,7 @@ const App = () => {
                             aiResult={resultData.aiResult}
                             verificationResult={resultData.verificationResult}
                             comparisonStatus={comparisonStatus}
+                            needsManualReview={resultData.aiResult.licensePlate === '需要人工辨識'}
                         />
                     )}
 

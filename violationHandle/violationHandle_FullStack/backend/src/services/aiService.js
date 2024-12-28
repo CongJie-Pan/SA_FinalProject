@@ -1,8 +1,10 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-require('dotenv').config();
 
+// 確保你已經設置了 API 密鑰
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+
+// 初始化模型
+const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
 
 async function generateContentWithBase64Image(prompt, base64Image) {
     try {
