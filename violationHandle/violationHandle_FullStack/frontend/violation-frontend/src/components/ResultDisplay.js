@@ -19,10 +19,15 @@ const ResultDisplay = ({ aiResult, verificationResult, comparisonStatus }) => {
         >
             <h3>AI 辨識結果：</h3>
             {needsManualReview ? (
-                <>
-                    <p>車牌號碼：需要人工辨識</p>
-                    <p>原因：{aiResult.reason || '太模糊或偵測1個以上車牌，無法順利辨識'}</p>
-                </>
+                <div className="manual-review-section" style={{ padding: '10px', backgroundColor: '#fff3cd', borderRadius: '5px' }}>
+                    <p style={{ color: '#856404', fontWeight: 'bold' }}>⚠️ 需要人工辨識</p>
+                    <p>原因：{aiResult.reason || '無法確定辨識結果'}</p>
+                    {aiResult.aiLicensePlate && (
+                        <p>系統初步辨識結果：{aiResult.aiLicensePlate}
+                            <span style={{ color: '#856404', fontSize: '0.9em' }}> (請人工確認)</span>
+                        </p>
+                    )}
+                </div>
             ) : (
                 <p>車牌號碼：{aiResult.licensePlate || '無法辨識'}</p>
             )}
