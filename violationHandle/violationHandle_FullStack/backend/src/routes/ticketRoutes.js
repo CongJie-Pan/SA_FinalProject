@@ -1,31 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const pool = require('../config/database');
+const ticketController = require('../controllers/ticketController');
 
 // GET all tickets
-router.get('/', async (req, res) => {
-    try {
-        const [rows] = await pool.query('SELECT * FROM TicketInfo');
-        res.json(rows);
-    } catch (error) {
-        console.error('Error fetching tickets:', error);
-        res.status(500).json({ message: 'Error fetching tickets', error: error.message });
-    }
-});
+router.get('/', ticketController.getAllTickets);
+
+// GET a specific ticket by ID
+router.get('/:id', ticketController.getTicketById);
 
 // POST a new ticket
-router.post('/', async (req, res) => {
-    const { ViolationID, FineAmount } = req.body;
-    try {
-        const [result] = await pool.query(
-            'INSERT INTO TicketInfo (ViolationID, FineAmount, CompletionTime, NotificationStatus) VALUES (?, ?, NOW(), false)',
-            [ViolationID, FineAmount]
-        );
-        res.status(201).json({ id: result.insertId, message: 'Ticket added successfully' });
-    } catch (error) {
-        console.error('Error adding ticket:', error);
-        res.status(500).json({ message: 'Error adding ticket', error: error.message });
-    }
-});
+router.post('/', ticketController.generateTicket);
+
+// PUT (update) an existing ticket
+router.put('/:id', ticketController.updateTicket);
+
+// DELETE a ticket
+router.delete('/:id', ticketController.deleteTicket);
 
 module.exports = router;

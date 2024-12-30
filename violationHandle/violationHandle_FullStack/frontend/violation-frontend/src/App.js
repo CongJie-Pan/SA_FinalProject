@@ -13,12 +13,14 @@ const App = () => {
     const [comparisonStatus, setComparisonStatus] = useState(null);
     const [resultData, setResultData] = useState(null);
     const [showTicketPage, setShowTicketPage] = useState(false);
+    const [ticketData, setTicketData] = useState(null);
     const [violations, setViolations] = useState([]);
     const [tickets, setTickets] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [showDatabaseContent, setShowDatabaseContent] = useState(false);
     const [processStatus, setProcessStatus] = useState('');
+    const [reviewStatus, setReviewStatus] = useState('');
 
     // 確認違規是否已確認
     const [isViolationConfirmed, setIsViolationConfirmed] = useState(false);
@@ -53,6 +55,7 @@ const App = () => {
             const violationResponse = await axios.post('http://localhost:3001/api/violations', formData);
 
             const { id } = violationResponse.data;
+
             setViolationID(`0${id}`);
             setProcessStatus('違規資料已上傳，ID: ' + `0${id}`);
 
@@ -75,7 +78,7 @@ const App = () => {
                     aiResult: { licensePlate: '需要人工辨識', reason: aiResult.reason },
                     verificationResult: null
                 });
-                setProcessStatus('AI 辨識結果：需要人工辨識');
+                setProcessStatus('AI 辨識結果：模糊或者有雙重車牌無法順利辨識');
                 return; // 提前結束函數執行
             }
 
@@ -113,6 +116,9 @@ const App = () => {
 
             setViolations(prevViolations => [...prevViolations, violationResponse.data]);
             setProcessStatus('處理完成');
+
+            // 在成功提交違規數據後
+            setViolationID(violationResponse.data.ViolationID);
 
         } catch (error) {
             console.error('Error submitting form:', error);
@@ -156,18 +162,38 @@ const App = () => {
         setShowTicketPage(true);
     };
 
-    const handleManualReview = (action) => {
+    const handleManualReview = async (action) => {
         if (action === 'reject') {
-            setProcessStatus('❌ 駁回違規️');
             setIsViolationConfirmed(false);
+            setProcessStatus('❌ 已駁回違規');
         } else if (action === 'confirm') {
-            setProcessStatus('✅ 確認違規');
             setIsViolationConfirmed(true);
+            setProcessStatus('✅ 已確認違規');
+
+            try {
+                console.log('Attempting to generate ticket for ViolationID:', violationID);
+                // 生成罰單
+                const response = await axios.post('http://localhost:3001/api/tickets', {
+                    ViolationID: violationID,
+                    FineAmount: 1000 // 假設固定罰款金額
+                });
+
+                console.log('Ticket generation response:', response.data);
+                setTicketData(response.data);
+                setShowTicketPage(true);
+                setProcessStatus('罰單已生成');
+            } catch (error) {
+                console.error('Error generating ticket:', error);
+                if (error.response) {
+                    console.error('Error response:', error.response.data);
+                    console.error('Error status:', error.response.status);
+                }
+                setProcessStatus(`生成罰單時發生錯誤: ${error.message}`);
+            }
         }
-        // 清除結果數據和比較狀態
-        //setResultData(null);
-        //setComparisonStatus(null);
     };
+
+
 
     const toggleDatabaseContent = () => {
         setShowDatabaseContent(!showDatabaseContent);
@@ -182,19 +208,19 @@ const App = () => {
             boxSizing: 'border-box',
             minHeight: '100vh',
         }}>
-            <h1 style={{ marginBottom: '20px' }}>違規處理系統</h1>
-            <button onClick={toggleDatabaseContent} style={{ marginBottom: '20px' }}>
+            <h1 style={{marginBottom: '20px'}}>違規處理系統</h1>
+            <button onClick={toggleDatabaseContent} style={{marginBottom: '20px'}}>
                 {showDatabaseContent ? '返回主頁' : '預覽資料庫內容'}
             </button>
 
             {showDatabaseContent ? (
-                <DatabaseContent violations={violations} tickets={tickets} loading={loading} error={error} />
+                <DatabaseContent violations={violations} tickets={tickets} loading={loading} error={error}/>
             ) : (
                 <>
                     <p>當前舉發 ID：{violationID}</p>
 
-                    <div style={{ width: '100%', maxWidth: '600px', marginTop: '20px' }}>
-                        <DataForm onSubmit={handleFormSubmit} onImageUpload={handleImageUpload} />
+                    <div style={{width: '100%', maxWidth: '600px', marginTop: '20px'}}>
+                        <DataForm onSubmit={handleFormSubmit} onImageUpload={handleImageUpload}/>
                     </div>
 
                     {previewImage && (
@@ -206,7 +232,7 @@ const App = () => {
                             <img
                                 src={previewImage}
                                 alt="Preview"
-                                style={{ maxWidth: '100%', maxHeight: '300px' }}
+                                style={{maxWidth: '100%', maxHeight: '300px'}}
                             />
                         </div>
                     )}
@@ -285,6 +311,37 @@ const App = () => {
 
                 </>
             )}
+
+            <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                padding: '20px',
+                boxSizing: 'border-box',
+                minHeight: '100vh',
+            }}>
+
+
+                {reviewStatus && (
+                    <div style={{
+                        marginTop: '10px',
+                        padding: '10px',
+                        backgroundColor: '#f0f0f0',
+                        borderRadius: '5px',
+                        textAlign: 'center'
+                    }}>
+                        <p>{reviewStatus}</p>
+                    </div>
+                )}
+
+                {showTicketPage && ticketData && (
+                    <TicketPage
+                        ticketData={ticketData}
+                        onClose={() => setShowTicketPage(false)}
+                    />
+                )}
+            </div>
+
         </div>
     );
 }
