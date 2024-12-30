@@ -1,3 +1,6 @@
+// 此檔案是違規處理系統的主要前端組件，負責整合所有子組件和處理核心業務邏輯
+// 包含違規舉發、AI辨識、人工審核和罰單生成等主要功能的實現
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import DataForm from './components/DataForm';
@@ -5,26 +8,32 @@ import DatabaseContent from './components/DatabaseContent';
 import TicketPage from './components/TicketPage';
 import ResultDisplay from './components/ResultDisplay';
 
+// 設定違規ID的初始值
 let currentID = 1;
 
 const App = () => {
+    // 狀態管理區域
+    // violationID: 當前違規案件的ID
     const [violationID, setViolationID] = useState(`0${currentID}`);
+    // previewImage: 儲存上傳圖片的預覽
     const [previewImage, setPreviewImage] = useState(null);
+    // comparisonStatus: AI辨識結果的狀態
     const [comparisonStatus, setComparisonStatus] = useState(null);
+    // resultData: 儲存AI辨識和車輛驗證的結果
     const [resultData, setResultData] = useState(null);
     const [showTicketPage, setShowTicketPage] = useState(false);
-    const [ticketData, setTicketData] = useState(null);
     const [violations, setViolations] = useState([]);
     const [tickets, setTickets] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [showDatabaseContent, setShowDatabaseContent] = useState(false);
     const [processStatus, setProcessStatus] = useState('');
-    const [reviewStatus, setReviewStatus] = useState('');
+    const [ticketData, setTicketData] = useState(null);
 
     // 確認違規是否已確認
     const [isViolationConfirmed, setIsViolationConfirmed] = useState(false);
 
+    // 初始化時從後端獲取違規和罰單資料
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
@@ -47,19 +56,20 @@ const App = () => {
         fetchData();
     }, []);
 
+    // 處理表單提交的主要函數
     const handleFormSubmit = async (formData) => {
         try {
+            // 開始處理違規資料
             setProcessStatus('開始處理違規資料...');
 
             // 使用接收到的 formData
             const violationResponse = await axios.post('http://localhost:3001/api/violations', formData);
 
             const { id } = violationResponse.data;
-
             setViolationID(`0${id}`);
             setProcessStatus('違規資料已上傳，ID: ' + `0${id}`);
 
-            // 進行 AI 辨識
+            // AI辨識流程
             setProcessStatus('正在進行 AI 辨識...');
             const aiResponse = await axios.post('http://localhost:3001/api/ai/recognize-plate', {
                 ViolationID: id,
@@ -72,20 +82,27 @@ const App = () => {
             setProcessStatus('AI 辨識完成');
 
             // 檢查 AI 辨識結果
-            if (aiResult.needsManualReview) {
+            if (aiResult.needsManualReview || 
+                !aiResult.aiLicensePlate || 
+                aiResult.aiLicensePlate.length < 5) {  // 假設正常車牌至少5字元
+                
                 setComparisonStatus('需要人工辨識');
                 setResultData({
-                    aiResult: { licensePlate: '需要人工辨識', reason: aiResult.reason },
+                    aiResult: { 
+                        licensePlate: '需要人工辨識', 
+                        reason: aiResult.reason || '圖片品質不佳或無法確認',
+                        aiLicensePlate: aiResult.aiLicensePlate || '無法完全辨識'
+                    },
                     verificationResult: null
                 });
-                setProcessStatus('AI 辨識結果：模糊或者有雙重車牌無法順利辨識');
-                return; // 提前結束函數執行
+                setProcessStatus('AI 辨識結果：需要人工辨識');
+                return;
             }
 
             // 更新這部分以使用正確的屬性名
             const recognizedPlate = aiResult.aiLicensePlate;
 
-            // 實際車牌驗證API
+            // 車牌驗證流程
             setProcessStatus('正在驗證車牌資訊...');
             let verificationResult;
             try {
@@ -117,10 +134,8 @@ const App = () => {
             setViolations(prevViolations => [...prevViolations, violationResponse.data]);
             setProcessStatus('處理完成');
 
-            // 在成功提交違規數據後
-            setViolationID(violationResponse.data.ViolationID);
-
         } catch (error) {
+            // 錯誤處理邏輯
             console.error('Error submitting form:', error);
             console.error('Form data:', formData);
 
@@ -133,7 +148,11 @@ const App = () => {
                 // 將未知錯誤轉為需要人工審核
                 setComparisonStatus('需要人工辨識');
                 setResultData({
-                    aiResult: { licensePlate: '需要人工辨識', reason: '有兩個以上車牌或其他錯誤，需要人工審核' },
+                    aiResult: { 
+                        licensePlate: '需要人工辨識', 
+                        reason: '系統錯誤，需要人工審核',
+                        aiLicensePlate: error.response?.data?.aiLicensePlate || '無法辨識'
+                    },
                     verificationResult: null
                 });
                 setProcessStatus('AI 辨識結果：需要人工辨識');
@@ -148,6 +167,7 @@ const App = () => {
         }
     };
 
+    // 處理圖片上傳的函數
     const handleImageUpload = (file) => {
         setProcessStatus('正在上傳圖片...');
         const reader = new FileReader();
@@ -158,48 +178,58 @@ const App = () => {
         reader.readAsDataURL(file);
     };
 
-    const handleNavigateToTicket = () => {
-        setShowTicketPage(true);
-    };
-
-    const handleManualReview = async (action) => {
-        if (action === 'reject') {
-            setIsViolationConfirmed(false);
-            setProcessStatus('❌ 已駁回違規');
-        } else if (action === 'confirm') {
-            setIsViolationConfirmed(true);
-            setProcessStatus('✅ 已確認違規');
-
-            try {
-                console.log('Attempting to generate ticket for ViolationID:', violationID);
-                // 生成罰單
-                const response = await axios.post('http://localhost:3001/api/tickets', {
-                    ViolationID: violationID,
-                    FineAmount: 1000 // 假設固定罰款金額
-                });
-
-                console.log('Ticket generation response:', response.data);
-                setTicketData(response.data);
-                setShowTicketPage(true);
-                setProcessStatus('罰單已生成');
-            } catch (error) {
-                console.error('Error generating ticket:', error);
-                if (error.response) {
-                    console.error('Error response:', error.response.data);
-                    console.error('Error status:', error.response.status);
-                }
-                setProcessStatus(`生成罰單時發生錯誤: ${error.message}`);
-            }
+    // 處理導航到罰單頁面的函數
+    const handleNavigateToTicket = async () => {
+        try {
+            setProcessStatus('正在生成罰單...');
+            const response = await axios.post('http://localhost:3001/api/tickets', {
+                ViolationID: violationID.replace('0', ''), // 移除前導的'0'
+                FineAmount: 1200 // 設定預設罰款金額
+            });
+            
+            setTicketData(response.data);
+            setShowTicketPage(true);
+            setProcessStatus('罰單生成成功');
+        } catch (error) {
+            console.error('Error generating ticket:', error);
+            setProcessStatus('生成罰單失敗: ' + (error.response?.data?.message || error.message));
         }
     };
 
+    // 處理人工審核的函數
+    const handleManualReview = async (action) => {
+        try {
+            if (action === 'reject') {
+                setProcessStatus('❌ 駁回違規️');
+                setIsViolationConfirmed(false);
+            } else if (action === 'confirm') {
+                const violationId = violationID.replace('0', '');
+                // 新增：確認違規時寫入 ProcessingLog
+                await axios.post('http://localhost:3001/api/processing-logs', {
+                    ViolationID: violationId,
+                    ErrorCode: '01',
+                    ProcessedBy: 'Worker',
+                    Remarks: '人工審核確認違規'
+                });
+                
+                const detectedPlate = resultData?.aiResult?.aiLicensePlate;
+                setProcessStatus(`✅ 確認違規 (參考車牌: ${detectedPlate || '無'})`);
+                setIsViolationConfirmed(true);
+            }
+        } catch (error) {
+            console.error('Error in manual review:', error);
+            setProcessStatus('處理失敗: ' + error.message);
+        }
+    };
 
-
+    // 切換資料庫內容顯示的函數
     const toggleDatabaseContent = () => {
         setShowDatabaseContent(!showDatabaseContent);
     };
 
+    // 渲染UI的返回區域
     return (
+        // 主要介面容器
         <div style={{
             display: 'flex',
             flexDirection: 'column',
@@ -208,21 +238,30 @@ const App = () => {
             boxSizing: 'border-box',
             minHeight: '100vh',
         }}>
-            <h1 style={{marginBottom: '20px'}}>違規處理系統</h1>
-            <button onClick={toggleDatabaseContent} style={{marginBottom: '20px'}}>
+            {/* 標題區域 */}
+            <h1 style={{ marginBottom: '20px' }}>違規處理系統</h1>
+
+            {/* 資料庫內容切換按鈕 */}
+            <button onClick={toggleDatabaseContent} style={{ marginBottom: '20px' }}>
                 {showDatabaseContent ? '返回主頁' : '預覽資料庫內容'}
             </button>
 
+            {/* 條件渲染：顯示資料庫內容或主要處理介面 */}
             {showDatabaseContent ? (
-                <DatabaseContent violations={violations} tickets={tickets} loading={loading} error={error}/>
+                // 顯示資料庫內容組件
+                <DatabaseContent violations={violations} tickets={tickets} loading={loading} error={error} />
             ) : (
+                // 主要處理介面
                 <>
+                    {/* 違規ID顯示 */}
                     <p>當前舉發 ID：{violationID}</p>
 
-                    <div style={{width: '100%', maxWidth: '600px', marginTop: '20px'}}>
-                        <DataForm onSubmit={handleFormSubmit} onImageUpload={handleImageUpload}/>
+                    {/* 表單區域 */}
+                    <div style={{ width: '100%', maxWidth: '600px', marginTop: '20px' }}>
+                        <DataForm onSubmit={handleFormSubmit} onImageUpload={handleImageUpload} />
                     </div>
 
+                    {/* 圖片預覽區域 */}
                     {previewImage && (
                         <div style={{
                             marginTop: '20px',
@@ -232,11 +271,12 @@ const App = () => {
                             <img
                                 src={previewImage}
                                 alt="Preview"
-                                style={{maxWidth: '100%', maxHeight: '300px'}}
+                                style={{ maxWidth: '100%', maxHeight: '300px' }}
                             />
                         </div>
                     )}
 
+                    {/* 處理狀態顯示 */}
                     {processStatus && (
                         <div style={{
                             marginTop: '10px',
@@ -249,6 +289,7 @@ const App = () => {
                         </div>
                     )}
 
+                    {/* AI辨識結果顯示 */}
                     {resultData && (
                         <ResultDisplay
                             aiResult={resultData.aiResult}
@@ -258,6 +299,7 @@ const App = () => {
                         />
                     )}
 
+                    {/* 人工審核按鈕區域 */}
                     {resultData && resultData.aiResult.licensePlate === '需要人工辨識' && (
                         <div style={{
                             display: 'flex',
@@ -294,6 +336,7 @@ const App = () => {
                         </div>
                     )}
 
+                    {/* 生成罰單按鈕 */}
                     {(comparisonStatus === '資訊無誤，結果一致' || isViolationConfirmed === true) && (
                         <button onClick={handleNavigateToTicket} style={{
                             marginTop: '10px',
@@ -311,37 +354,6 @@ const App = () => {
 
                 </>
             )}
-
-            <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                padding: '20px',
-                boxSizing: 'border-box',
-                minHeight: '100vh',
-            }}>
-
-
-                {reviewStatus && (
-                    <div style={{
-                        marginTop: '10px',
-                        padding: '10px',
-                        backgroundColor: '#f0f0f0',
-                        borderRadius: '5px',
-                        textAlign: 'center'
-                    }}>
-                        <p>{reviewStatus}</p>
-                    </div>
-                )}
-
-                {showTicketPage && ticketData && (
-                    <TicketPage
-                        ticketData={ticketData}
-                        onClose={() => setShowTicketPage(false)}
-                    />
-                )}
-            </div>
-
         </div>
     );
 }
