@@ -1,36 +1,32 @@
-// src/app.js
+// 此檔案是Express應用程序的核心配置文件，負責整合所有中間件和路由
+// 處理所有API路由的註冊和靜態資源的配置
 
-/* API 連接部分 */
+/* Express應用程序配置區域 */
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
+// 引入各個功能模塊的路由處理器
 const path = require('path');
-
-// 引入路由
-const manualRoutes = require('./routes/manualRoutes');
-const ticketRoutes = require('./routes/ticketRoutes');
-const violationRoutes = require('./routes/violationRoutes');
-const aiRoutes = require('./routes/aiRoutes');
-const vehicleInfoRoutes = require('./api/vehicleInfo');
-
-
-//router.post('/recognize-plate', aiController.recognizePlate);
+const manualRoutes = require('./routes/manualRoutes');    // 人工審核路由
+const ticketRoutes = require('./routes/ticketRoutes');    // 罰單處理路由
+const violationRoutes = require('./routes/violationRoutes'); // 違規處理路由
+const aiRoutes = require('./routes/aiRoutes');           // AI辨識路由
+const vehicleInfoRoutes = require('./api/vehicleInfo');   // 車輛信息路由
 
 const app = express();
 
-// 使用中介軟體
-app.use(bodyParser.json());
-app.use(cors());
+// 中間件配置
+app.use(bodyParser.json());    // 解析JSON格式的請求體
+app.use(cors());              // 處理跨域請求
 
-// 使用路由
-app.use('/api/violations', violationRoutes);
-app.use('/api/tickets', ticketRoutes);
-app.use('/api/ai', aiRoutes);
-app.use('/api/vehicleInfo', vehicleInfoRoutes);
+// API路由註冊
+app.use('/api/violations', violationRoutes);     // 違規相關API
+app.use('/api/tickets', ticketRoutes);           // 罰單相關API
+app.use('/api/ai', aiRoutes);                    // AI辨識相關API
+app.use('/api/vehicleInfo', vehicleInfoRoutes);  // 車輛信息相關API
 
 // 靜態資源配置
-// 指定靜態文件目錄，指向 React 的 build 資料夾
 app.use(express.static(path.join(__dirname, '../../frontend/violation-frontend/build')));
 
 // 根路由

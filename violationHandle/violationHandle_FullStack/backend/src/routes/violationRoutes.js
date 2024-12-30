@@ -1,13 +1,12 @@
-/* 這些代碼片段展示了一個使用 Express 框架構建的 Node.js 應用程序
-該應用程序設置了多個 API 路由來處理違規和罰單數據，並與 MySQL 資料庫進行交互。
-app.js 配置了中介軟體和靜態資源，server.js 啟動了服務器並處理生產和開發模式下的靜態資源。
-database.js 則設置了 MySQL 連接池，violationRoutes.js 定義了違規相關的 API 路由。*/
+// 此檔案主要負責處理所有違規事件相關的API路由
+// 包含獲取違規記錄、新增違規事件等功能的實現
 
 const express = require('express');
 const router = express.Router();
 const pool = require('../config/database');
 
-// GET all violations
+// 獲取所有違規事件的路由
+// GET方法：從資料庫中檢索所有違規記錄
 router.get('/', async (req, res) => {
     try {
         const [rows] = await pool.query('SELECT ViolationID, CaptureLocation, CaptureTime FROM EventBasicInfo');
@@ -19,7 +18,8 @@ router.get('/', async (req, res) => {
     }
 });
 
-// 同樣檢查罰單的路由
+// 獲取所有罰單資訊的路由
+// 從資料庫中檢索所有罰單相關資訊
 router.get('/tickets', async (req, res) => {
     try {
         const [rows] = await pool.query('SELECT TicketID, LicensePlate, FineAmount FROM TicketInfo');
@@ -31,7 +31,8 @@ router.get('/tickets', async (req, res) => {
     }
 });
 
-// POST a new violation
+// 新增違規事件的路由
+// POST方法：接收前端傳來的違規資訊並存入資料庫
 router.post('/', async (req, res) => {
     const { deviceID, captureTime, captureLocation } = req.body;
     try {

@@ -1,3 +1,6 @@
+// 此檔案是應用程序的入口點，負責啟動HTTP服務器並處理環境配置
+// 根據生產或開發環境提供不同的靜態資源服務策略
+
 const path = require('path');
 const express = require('express');
 const app = require('./app');

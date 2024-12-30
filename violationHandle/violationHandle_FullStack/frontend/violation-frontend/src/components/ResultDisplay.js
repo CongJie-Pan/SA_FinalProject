@@ -1,10 +1,18 @@
+// 此元件用於展示AI辨識結果和驗證比對的結果
+// 根據不同的辨識結果顯示不同的背景顏色和相應的詳細資訊
+
+// 引入React函式庫
 import React from 'react';
 
+// 定義ResultDisplay元件，接收AI結果、驗證結果和比對狀態作為props
 const ResultDisplay = ({ aiResult, verificationResult, comparisonStatus }) => {
+    // 判斷是否需要人工審核
     const needsManualReview = aiResult.licensePlate === '需要人工辨識';
+    // 根據結果設定不同的背景顏色
     const backgroundColor = needsManualReview ? '#fff3cd' :
         (comparisonStatus === '資訊無誤，結果一致' ? '#e6ffe6' : '#ffe6e6');
 
+    // 返回結果顯示介面
     return (
         <div
             style={{
@@ -17,8 +25,11 @@ const ResultDisplay = ({ aiResult, verificationResult, comparisonStatus }) => {
                 backgroundColor: backgroundColor,
             }}
         >
+            {/* AI辨識結果區段 */}
             <h3>AI 辨識結果：</h3>
+            {/* 根據是否需要人工審核顯示不同的內容 */}
             {needsManualReview ? (
+                // 人工審核提示區段
                 <div className="manual-review-section" style={{ padding: '10px', backgroundColor: '#fff3cd', borderRadius: '5px' }}>
                     <p style={{ color: '#856404', fontWeight: 'bold' }}>⚠️ 需要人工辨識</p>
                     <p>原因：{aiResult.reason || '無法確定辨識結果'}</p>
@@ -29,9 +40,11 @@ const ResultDisplay = ({ aiResult, verificationResult, comparisonStatus }) => {
                     )}
                 </div>
             ) : (
+                // 顯示辨識出的車牌號碼
                 <p>車牌號碼：{aiResult.licensePlate || '無法辨識'}</p>
             )}
 
+            {/* 非人工審核情況下顯示驗證結果和比較結果 */}
             {!needsManualReview && (
                 <>
                     <h3>車牌驗證結果：</h3>

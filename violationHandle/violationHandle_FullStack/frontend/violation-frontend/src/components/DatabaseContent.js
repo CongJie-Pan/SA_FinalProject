@@ -1,13 +1,21 @@
+// 此元件用於顯示資料庫中的違規記錄和罰單資料
+// 實現即時獲取和展示資料庫內容的功能
+
+// 引入必要的依賴
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+// 定義DatabaseContent元件
 const DatabaseContent = () => {
-    const [violations, setViolations] = useState([]);
-    const [tickets, setTickets] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    // 使用useState管理狀態
+    const [violations, setViolations] = useState([]); // 違規記錄
+    const [tickets, setTickets] = useState([]); // 罰單記錄
+    const [loading, setLoading] = useState(true); // 載入狀態
+    const [error, setError] = useState(null); // 錯誤狀態
 
+    // 使用useEffect在元件載入時獲取資料
     useEffect(() => {
+        // 定義資料獲取函數
         const fetchData = async () => {
             setLoading(true);
             try {
@@ -29,6 +37,7 @@ const DatabaseContent = () => {
         fetchData();
     }, []);
 
+    // 渲染違規記錄列表
     const renderViolationsList = () => (
         <div style={{ marginTop: '20px', width: '100%', maxWidth: '600px' }}>
             <h2>違規事件列表</h2>
@@ -55,6 +64,7 @@ const DatabaseContent = () => {
         </div>
     );
 
+    // 渲染罰單列表
     const renderTicketsList = () => (
         <div style={{ marginTop: '20px', width: '100%', maxWidth: '600px' }}>
             <h2>罰單列表</h2>
@@ -82,6 +92,7 @@ const DatabaseContent = () => {
         </div>
     );
 
+    // 返回完整的資料庫內容顯示介面
     return (
         <div style={{
             display: 'flex',

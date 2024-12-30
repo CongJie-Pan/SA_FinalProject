@@ -1,17 +1,26 @@
+// 此元件用於提供資料輸入表單介面
+// 允許使用者輸入設備ID、拍攝時間、地點，並上傳圖片
+
+// 引入必要的React組件
 import React, { useState } from 'react';
 
+// 定義DataForm元件，接收表單提交和圖片上傳處理函數作為props
 const DataForm = ({ onSubmit, onImageUpload }) => {
+    // 使用useState管理表單數據
     const [formData, setFormData] = useState({
+        // 初始化表單欄位
         deviceID: '',
         captureTime: '',
         captureLocation: '',
     });
 
+    // 處理文件上傳
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         onImageUpload(file); // 即時預覽圖片
     };
 
+    // 處理Input欄位變更
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData(prevData => ({
@@ -20,11 +29,13 @@ const DataForm = ({ onSubmit, onImageUpload }) => {
         }));
     };
 
+    // 處理表單提交
     const handleSubmit = (e) => {
         e.preventDefault();
         onSubmit(formData); // 提交表單數據
     };
 
+    // 返回表單介面
     return (
         <form
             onSubmit={handleSubmit}
@@ -38,6 +49,7 @@ const DataForm = ({ onSubmit, onImageUpload }) => {
                 backgroundColor: '#f9f9f9',
             }}
         >
+            {/* 各個輸入欄位 */}
             <label>
                 設備 ID：
                 <input
