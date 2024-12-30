@@ -6,9 +6,7 @@ import React from 'react';
 
 // 定義TicketPage元件，接收罰單資料和關閉函數作為props
 const TicketPage = ({ ticketData, onClose }) => {
-    // 返回一個覆蓋整個螢幕的半透明背景層
     return (
-        // 外層容器：設定固定定位和半透明黑色背景
         <div style={{
             position: 'fixed',
             top: 0,
@@ -29,9 +27,7 @@ const TicketPage = ({ ticketData, onClose }) => {
                 width: '90%'
             }}>
                 <h2>罰單詳情</h2>
-                {/* 條件渲染：如果有罰單資料則顯示詳細資訊，否則顯示載入提示 */}
                 {ticketData ? (
-                    // 顯示罰單的各項詳細資訊
                     <div>
                         <p>罰單 ID: {ticketData.TicketID}</p>
                         <p>違規 ID: {ticketData.ViolationID}</p>
@@ -40,11 +36,9 @@ const TicketPage = ({ ticketData, onClose }) => {
                         <p>處理狀態: {ticketData.Status || '已開立'}</p>
                     </div>
                 ) : (
-                    // 載入中的提示訊息
                     <p>載入罰單資料中...</p>
                 )}
-                {/* 關閉按鈕：點擊時調用onClose函數 */}
-                <button 
+                <button
                     onClick={onClose}
                     style={{
                         marginTop: '20px',

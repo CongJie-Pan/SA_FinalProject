@@ -2,11 +2,11 @@
 // 包含違規舉發、AI辨識、人工審核和罰單生成等主要功能的實現
 
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import DataForm from './components/DataForm';
-import DatabaseContent from './components/DatabaseContent';
-import TicketPage from './components/TicketPage';
 import ResultDisplay from './components/ResultDisplay';
+import TicketPage from './components/TicketPage';
+import DataForm from './components/DataForm';
+import axios from 'axios';
+import DatabaseContent from './components/DatabaseContent';
 
 // 設定違規ID的初始值
 let currentID = 1;
@@ -29,6 +29,9 @@ const App = () => {
     const [showDatabaseContent, setShowDatabaseContent] = useState(false);
     const [processStatus, setProcessStatus] = useState('');
     const [ticketData, setTicketData] = useState(null);
+
+    // 新增：用於控制當前顯示的頁面
+    const [currentPage, setCurrentPage] = useState('main');
 
     // 確認違規是否已確認
     const [isViolationConfirmed, setIsViolationConfirmed] = useState(false);
@@ -136,6 +139,8 @@ const App = () => {
 
         } catch (error) {
             // 錯誤處理邏輯
+            /* 為什麼不加入處理員手動輸入正確車號的欄位？*/
+            /* 因為，防止處理員有情緒或其他理由，在系統設計上，就防止處理員擅自竄改或新增車號，只能進行駁回或允許 */
             console.error('Error submitting form:', error);
             console.error('Form data:', formData);
 
@@ -148,9 +153,9 @@ const App = () => {
                 // 將未知錯誤轉為需要人工審核
                 setComparisonStatus('需要人工辨識');
                 setResultData({
-                    aiResult: { 
-                        licensePlate: '需要人工辨識', 
-                        reason: '系統錯誤，需要人工審核',
+                    aiResult: {
+                        licensePlate: '需要人工辨識',
+                        reason: '模糊或多重車牌，需要人工審核',
                         aiLicensePlate: error.response?.data?.aiLicensePlate || '無法辨識'
                     },
                     verificationResult: null
@@ -183,17 +188,24 @@ const App = () => {
         try {
             setProcessStatus('正在生成罰單...');
             const response = await axios.post('http://localhost:3001/api/tickets', {
-                ViolationID: violationID.replace('0', ''), // 移除前導的'0'
-                FineAmount: 1200 // 設定預設罰款金額
+                ViolationID: violationID.replace('0', ''),
+                FineAmount: 1200,
+                CompletionTime: new Date().toISOString(),
+                NotificationStatus: false
             });
-            
+
             setTicketData(response.data);
-            setShowTicketPage(true);
+            setCurrentPage('ticket'); // 切換到罰單頁面
             setProcessStatus('罰單生成成功');
         } catch (error) {
             console.error('Error generating ticket:', error);
             setProcessStatus('生成罰單失敗: ' + (error.response?.data?.message || error.message));
         }
+    };
+
+    // 新增：返回主頁面的函數
+    const handleReturnToMain = () => {
+        setCurrentPage('main');
     };
 
     // 處理人工審核的函數
@@ -336,20 +348,36 @@ const App = () => {
                         </div>
                     )}
 
-                    {/* 生成罰單按鈕 */}
+
+                    {/* 生成罰單按鈕和罰單頁面 */}
                     {(comparisonStatus === '資訊無誤，結果一致' || isViolationConfirmed === true) && (
-                        <button onClick={handleNavigateToTicket} style={{
-                            marginTop: '10px',
-                            padding: '10px 20px',
-                            backgroundColor: '#4CAF50',
-                            color: 'white',
-                            border: 'none',
-                            borderRadius: '5px',
-                            cursor: 'pointer',
-                        }}>
-                            生成罰單
-                        </button>
+                        <>
+                            <button
+                                onClick={handleNavigateToTicket}
+                                style={{
+                                    marginTop: '10px',
+                                    padding: '10px 20px',
+                                    backgroundColor: '#4CAF50',
+                                    color: 'white',
+                                    border: 'none',
+                                    borderRadius: '5px',
+                                    cursor: 'pointer',
+                                }}
+                            >
+                                生成罰單
+                            </button>
+                        </>
                     )}
+
+                    {/* 顯示罰單頁面 */}
+                    {currentPage === 'ticket' && ticketData && (
+                        <TicketPage
+                            ticketData={ticketData}
+                            onClose={handleReturnToMain}
+                        />
+                    )}
+
+
 
 
                 </>

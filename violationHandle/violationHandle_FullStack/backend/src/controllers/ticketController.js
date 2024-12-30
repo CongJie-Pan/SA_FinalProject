@@ -8,10 +8,10 @@ const db = require('../config/database');
 // 獲取所有罰單資料的功能
 exports.getAllTickets = async (req, res) => {
     try {
-        const [tickets] = await db.query('SELECT * FROM TicketInfo');
-        res.status(200).json(tickets);
+        const [rows] = await db.query('SELECT * FROM TicketInfo');
+        res.json(rows);
     } catch (error) {
-        console.error('Error fetching tickets:', error);
+        console.error('Error fetching all tickets:', error);
         res.status(500).json({ message: 'Error fetching tickets', error: error.message });
     }
 };
@@ -20,68 +20,73 @@ exports.getAllTickets = async (req, res) => {
 exports.getTicketById = async (req, res) => {
     const { id } = req.params;
     try {
-        const [ticket] = await db.query('SELECT * FROM TicketInfo WHERE TicketID = ?', [id]);
-        if (ticket.length > 0) {
-            res.status(200).json(ticket[0]);
-        } else {
-            res.status(404).json({ message: 'Ticket not found' });
+        const [rows] = await db.query('SELECT * FROM TicketInfo WHERE TicketID = ?', [id]);
+        if (rows.length === 0) {
+            return res.status(404).json({ message: '找不到指定的罰單' });
         }
+        res.json(rows[0]);
     } catch (error) {
-        console.error('Error fetching ticket:', error);
+        console.error('Error fetching ticket by ID:', error);
         res.status(500).json({ message: 'Error fetching ticket', error: error.message });
     }
 };
 
 // 生成新罰單的功能
 exports.generateTicket = async (req, res) => {
-    // 從請求中獲取違規ID和罰款金額
-    const { ViolationID, FineAmount } = req.body;
+    const { ViolationID, FineAmount, CompletionTime, NotificationStatus } = req.body;
 
     try {
-        // 使用時間戳記產生獨特的罰單ID
-        const ticketID = `T${Date.now()}`;
-        
-        // 步驟1: 在罰單資料表中新增記錄
-        console.log('Inserting into TicketInfo...');
-        await db.query('INSERT INTO TicketInfo (TicketID, ViolationID, FineAmount, IssuedDate) VALUES (?, ?, ?, NOW())',
-            [ticketID, ViolationID, FineAmount]);
-        console.log('TicketInfo inserted successfully');
+        // 首先檢查違規記錄是否存在於 EventBasicInfo 表中
+        const [eventRows] = await db.query('SELECT * FROM EventBasicInfo WHERE ViolationID = ?', [ViolationID]);
+        if (eventRows.length === 0) {
+            return res.status(404).json({ message: '找不到指定的違規記錄' });
+        }
 
-        // 步驟2: 獲取AI辨識的錯誤類型，用於記錄處理日誌
-        console.log('Fetching AIRecognition...');
-        const [aiRecognition] = await db.query('SELECT ErrorType FROM AIRecognition WHERE ViolationID = ?', [ViolationID]);
-        const errorType = aiRecognition[0]?.ErrorType || 'Unknown';
-        console.log('AIRecognition fetched, ErrorType:', errorType);
+        // 檢查 AI 辨識結果
+        const [aiRows] = await db.query('SELECT * FROM AIRecognition WHERE ViolationID = ?', [ViolationID]);
+        if (aiRows.length > 0 && aiRows[0].RecognitionResult === 'MANUAL_REVIEW') {
+            return res.status(400).json({ message: '此違規記錄需要人工審核，無法自動生成罰單' });
+        }
 
-        // 步驟3: 在處理日誌中記錄罰單生成的操作
-        console.log('Inserting into ProcessingLog...');
-        const [lastLog] = await db.query('SELECT MAX(LogID) as maxLogID FROM ProcessingLog');
-        const newLogID = (lastLog[0].maxLogID || 0) + 1;
+        // 將 CompletionTime 轉換為 MySQL 可接受的格式
+        const formattedCompletionTime = new Date(CompletionTime).toISOString().slice(0, 19).replace('T', ' ');
 
-        await db.query('INSERT INTO ProcessingLog (LogID, ViolationID, ErrorCode, ProcessedBy, ProcessedTime, Remarks) VALUES (?, ?, ?, ?, NOW(), ?)',
-            [newLogID, ViolationID, '01', 'Worker', errorType]);
-        console.log('ProcessingLog inserted successfully');
+        // 插入罰單數據
+        const [insertResult] = await db.query('INSERT INTO TicketInfo (ViolationID, FineAmount, CompletionTime, NotificationStatus) VALUES (?, ?, ?, ?)', [
+            ViolationID,
+            FineAmount,
+            formattedCompletionTime,
+            NotificationStatus
+        ]);
 
-        // 步驟4: 回傳新生成的罰單資訊
-        console.log('Fetching generated ticket info...');
-        const [ticketInfo] = await db.query('SELECT * FROM TicketInfo WHERE TicketID = ?', [ticketID]);
+        // 更新處理日誌
+        await db.query('INSERT INTO ProcessingLog (ViolationID, ErrorCode, ProcessedBy, ProcessedTime, Remarks) VALUES (?, ?, ?, NOW(), ?)', [
+            ViolationID,
+            '00', // 假設 '00' 代表正常處理
+            'System',
+            '罰單生成完成'
+        ]);
 
-        console.log('Ticket generated successfully:', ticketInfo[0]);
-        res.status(200).json(ticketInfo[0]);
+        res.status(200).json({ message: 'Ticket generated successfully', ticketId: insertResult.insertId });
     } catch (error) {
-        // 錯誤處理和記錄
         console.error('Error generating ticket:', error);
-        res.status(500).json({ message: 'Error generating ticket', error: error.message, stack: error.stack });
+        res.status(500).json({ message: 'Error generating ticket', error: error.message });
     }
 };
 
 // 更新現有罰單的功能
 exports.updateTicket = async (req, res) => {
     const { id } = req.params;
-    const { FineAmount } = req.body;
+    const { FineAmount, NotificationStatus } = req.body;
     try {
-        await db.query('UPDATE TicketInfo SET FineAmount = ? WHERE TicketID = ?', [FineAmount, id]);
-        res.status(200).json({ message: 'Ticket updated successfully' });
+        const [result] = await db.query(
+            'UPDATE TicketInfo SET FineAmount = ?, NotificationStatus = ?, CompletionTime = NOW() WHERE TicketID = ?',
+            [FineAmount, NotificationStatus, id]
+        );
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: '找不到指定的罰單' });
+        }
+        res.json({ message: '罰單更新成功' });
     } catch (error) {
         console.error('Error updating ticket:', error);
         res.status(500).json({ message: 'Error updating ticket', error: error.message });
@@ -92,8 +97,11 @@ exports.updateTicket = async (req, res) => {
 exports.deleteTicket = async (req, res) => {
     const { id } = req.params;
     try {
-        await db.query('DELETE FROM TicketInfo WHERE TicketID = ?', [id]);
-        res.status(200).json({ message: 'Ticket deleted successfully' });
+        const [result] = await db.query('DELETE FROM TicketInfo WHERE TicketID = ?', [id]);
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: '找不到指定的罰單' });
+        }
+        res.json({ message: '罰單刪除成功' });
     } catch (error) {
         console.error('Error deleting ticket:', error);
         res.status(500).json({ message: 'Error deleting ticket', error: error.message });

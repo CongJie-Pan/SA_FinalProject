@@ -1,6 +1,16 @@
 // 此檔案是Express應用程序的核心配置文件，負責整合所有中間件和路由
 // 處理所有API路由的註冊和靜態資源的配置
 
+const db = require('./config/database');
+
+// 在應用啟動時測試資料庫連接
+db.query('SELECT 1')
+    .then(() => console.log('Database connected successfully'))
+    .catch(err => {
+        console.error('Database connection error:', err);
+        process.exit(1);  // 如果無法連接到資料庫，終止應用
+    });
+
 /* Express應用程序配置區域 */
 const express = require('express');
 const bodyParser = require('body-parser');
