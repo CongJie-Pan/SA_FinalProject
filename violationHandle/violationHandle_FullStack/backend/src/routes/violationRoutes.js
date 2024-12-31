@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
 // 從資料庫中檢索所有罰單相關資訊
 router.get('/tickets', async (req, res) => {
     try {
-        const [rows] = await pool.query('SELECT TicketID, LicensePlate, FineAmount FROM TicketInfo');
+        const [rows] = await pool.query('SELECT TicketID, ViolationID, FineAmount FROM TicketInfo');
         console.log('Fetched tickets:', rows); // 添加這行來檢查獲取的數據
         res.json(rows);
     } catch (error) {

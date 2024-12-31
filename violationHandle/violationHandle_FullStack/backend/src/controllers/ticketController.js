@@ -42,27 +42,22 @@ exports.generateTicket = async (req, res) => {
             return res.status(404).json({ message: '找不到指定的違規記錄' });
         }
 
-        // 檢查車牌號碼是否匹配
-        if (eventRows[0].LicensePlate !== LicensePlate) {
-            // 如果不匹配，更新資料庫中的車牌號碼
-            await db.query('UPDATE EventBasicInfo SET LicensePlate = ? WHERE ViolationID = ?', [LicensePlate, ViolationID]);
-            console.log(`Updated license plate for ViolationID ${ViolationID} from ${eventRows[0].LicensePlate} to ${LicensePlate}`);
-        }
-
         // 檢查 AI 辨識結果
         const [aiRows] = await db.query('SELECT * FROM AIRecognition WHERE ViolationID = ?', [ViolationID]);
         if (aiRows.length > 0 && aiRows[0].RecognitionResult === 'MANUAL_REVIEW') {
             return res.status(400).json({ message: '此違規記錄需要人工審核，無法自動生成罰單' });
         }
 
-        // 將 CompletionTime 轉換為 MySQL 可接受的格式
-        const formattedCompletionTime = new Date(CompletionTime).toISOString().slice(0, 19).replace('T', ' ');
+        // 獲取當前台北時間
+        const now = new Date().toLocaleString('en-US', { timeZone: 'Asia/Taipei' });
+        const taipeiTime = new Date(now);
+        const formattedTaipeiTime = taipeiTime.toISOString().slice(0, 19).replace('T', ' ');
 
         // 插入罰單數據
         const [insertResult] = await db.query('INSERT INTO TicketInfo (ViolationID, FineAmount, CompletionTime, NotificationStatus) VALUES (?, ?, ?, ?)', [
             ViolationID,
             FineAmount,
-            formattedCompletionTime,
+            formattedTaipeiTime,
             NotificationStatus
         ]);
 
