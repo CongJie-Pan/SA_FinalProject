@@ -140,7 +140,7 @@ const App = () => {
         } catch (error) {
             // 錯誤處理邏輯
             /* 為什麼不加入處理員手動輸入正確車號的欄位？*/
-            /* 因為，防止處理員有情緒或其他理由，在系統設計上，就防止處理員擅自竄改或新增車號，只能進行駁回或允許 */
+            /* 因為，防止處理員有情緒或其他理由，在系統設計上，就防止處理員擅自竄改或新增車號，寧願漏掉，也防止氾濫竄改使用，因此只能進行駁回或允許 */
             console.error('Error submitting form:', error);
             console.error('Form data:', formData);
 
@@ -187,19 +187,47 @@ const App = () => {
     const handleNavigateToTicket = async () => {
         try {
             setProcessStatus('正在生成罰單...');
+            console.log(`開始生成罰單，違規ID: ${violationID}`);
+
+            // 格式化當前日期時間為 MySQL 可接受的格式
+            const currentDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
+
             const response = await axios.post('http://localhost:3001/api/tickets', {
                 ViolationID: violationID.replace('0', ''),
                 FineAmount: 1200,
-                CompletionTime: new Date().toISOString(),
+                CompletionTime: currentDate,
                 NotificationStatus: false
             });
 
-            setTicketData(response.data);
-            setCurrentPage('ticket'); // 切換到罰單頁面
-            setProcessStatus('罰單生成成功');
+            console.log('罰單生成成功，伺服器回應:', response.data);
+
+            // 檢查回應中是否包含預期的數據
+            if (response.data && response.data.message) {
+                // 假設後端返回的是 { message: 'Ticket generated successfully', ticketId: 123 }
+                setTicketData({
+                    TicketID: response.data.ticketId,
+                    ViolationID: violationID.replace('0', ''),
+                    FineAmount: 1200,
+                    CompletionTime: currentDate,
+                    NotificationStatus: false
+                });
+                setCurrentPage('ticket'); // 切換到罰單頁面
+                setProcessStatus(`罰單生成成功，罰單ID: ${response.data.ticketId}`);
+            } else {
+                throw new Error('伺服器回應中缺少預期的數據');
+            }
         } catch (error) {
-            console.error('Error generating ticket:', error);
-            setProcessStatus('生成罰單失敗: ' + (error.response?.data?.message || error.message));
+            console.error('生成罰單時發生錯誤:', error);
+            let errorMessage = '生成罰單失敗';
+            if (error.response) {
+                errorMessage += `: ${error.response.status} - ${error.response.data.message || '未知錯誤'}`;
+                console.error('伺服器回應:', error.response.data);
+            } else if (error.request) {
+                errorMessage += ': 無法連接到伺服器';
+            } else {
+                errorMessage += `: ${error.message}`;
+            }
+            setProcessStatus(errorMessage);
         }
     };
 
@@ -230,7 +258,32 @@ const App = () => {
             }
         } catch (error) {
             console.error('Error in manual review:', error);
-            setProcessStatus('處理失敗: ' + error.message);
+
+            let errorMessage = '處理失敗: ';
+            if (error.response) {
+                // 伺服器回應的錯誤
+                errorMessage += `伺服器錯誤 (${error.response.status}): ${error.response.data.message || '未知錯誤'}`;
+            } else if (error.request) {
+                // 請求發送成功，但沒有收到回應
+                errorMessage += '無法連接到伺服器，請檢查網路連接';
+            } else {
+                // 其他錯誤
+                errorMessage += error.message || '未知錯誤';
+            }
+
+            setProcessStatus(errorMessage);
+
+            // 記錄錯誤到處理日誌
+            try {
+                await axios.post('http://localhost:3001/api/processing-logs', {
+                    ViolationID: violationID.replace('0', ''),
+                    ErrorCode: '99',
+                    ProcessedBy: 'Worker',
+                    Remarks: `人工審核失敗: ${errorMessage}`
+                });
+            } catch (logError) {
+                console.error('無法記錄錯誤到處理日誌:', logError);
+            }
         }
     };
 

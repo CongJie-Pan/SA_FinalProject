@@ -1,11 +1,22 @@
-// 此元件用於顯示罰單的詳細資訊
-// 實現一個彈出視窗形式的介面，展示罰單的各項資料
-
-// 引入React函式庫
 import React from 'react';
 
-// 定義TicketPage元件，接收罰單資料和關閉函數作為props
 const TicketPage = ({ ticketData, onClose }) => {
+    // 格式化日期的函數
+    const formatDate = (dateString) => {
+        if (!dateString) return 'N/A';
+        const date = new Date(dateString);
+        if (isNaN(date.getTime())) return 'Invalid Date';
+        return date.toLocaleString('zh-TW', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        });
+    };
+
     return (
         <div style={{
             position: 'fixed',
@@ -26,14 +37,14 @@ const TicketPage = ({ ticketData, onClose }) => {
                 maxWidth: '500px',
                 width: '90%'
             }}>
-                <h2>罰單詳情</h2>
+                <h2>罰單簡要資訊</h2>
                 {ticketData ? (
                     <div>
                         <p>罰單 ID: {ticketData.TicketID}</p>
                         <p>違規 ID: {ticketData.ViolationID}</p>
                         <p>罰款金額: ${ticketData.FineAmount}</p>
-                        <p>開立日期: {new Date(ticketData.IssuedDate).toLocaleString()}</p>
-                        <p>處理狀態: {ticketData.Status || '已開立'}</p>
+                        <p>開立日期: {formatDate(ticketData.CompletionTime)}</p>
+                        <p>處理狀態: {ticketData.NotificationStatus ? '罰單已通知車主' : '罰單尚未通知車主'}</p>
                     </div>
                 ) : (
                     <p>載入罰單資料中...</p>

@@ -83,7 +83,7 @@ const DatabaseContent = () => {
                                 罰單號: {ticket.ViolationID},
                                 金額: {ticket.FineAmount},
                                 開立時間: {new Date(ticket.CompletionTime).toLocaleString()},
-                                通知狀態: {ticket.NotificationStatus ? '已通知' : '未通知'}
+                                通知狀態: {ticket.NotificationStatus ? '罰單已通知車主' : '罰單尚未通知車主'}
                             </li>
                         ))}
                     </ul>

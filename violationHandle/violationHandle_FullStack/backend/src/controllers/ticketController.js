@@ -42,6 +42,13 @@ exports.generateTicket = async (req, res) => {
             return res.status(404).json({ message: '找不到指定的違規記錄' });
         }
 
+        // 檢查車牌號碼是否匹配
+        if (eventRows[0].LicensePlate !== LicensePlate) {
+            // 如果不匹配，更新資料庫中的車牌號碼
+            await db.query('UPDATE EventBasicInfo SET LicensePlate = ? WHERE ViolationID = ?', [LicensePlate, ViolationID]);
+            console.log(`Updated license plate for ViolationID ${ViolationID} from ${eventRows[0].LicensePlate} to ${LicensePlate}`);
+        }
+
         // 檢查 AI 辨識結果
         const [aiRows] = await db.query('SELECT * FROM AIRecognition WHERE ViolationID = ?', [ViolationID]);
         if (aiRows.length > 0 && aiRows[0].RecognitionResult === 'MANUAL_REVIEW') {
