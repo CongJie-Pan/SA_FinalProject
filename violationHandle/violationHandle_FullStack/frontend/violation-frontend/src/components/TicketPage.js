@@ -16,6 +16,9 @@ const TicketPage = ({ ticketData, onClose }) => {
             hour12: false
         });
     };
+    const onSubmit = () => {
+        window.open('https://claude.site/artifacts/0e57ca36-8d41-4951-9738-c0e9693506f6', '_blank');
+    };
 
     return (
         <div style={{
@@ -54,13 +57,27 @@ const TicketPage = ({ ticketData, onClose }) => {
                     style={{
                         marginTop: '20px',
                         padding: '10px 20px',
-                        backgroundColor: '#4CAF50',
+                        backgroundColor: 'red',
                         color: 'white',
                         border: 'none',
                         borderRadius: '5px',
                         cursor: 'pointer'
                     }}>
                     關閉
+                </button>
+                <button
+                    onClick={onSubmit}
+                    style={{
+                        marginTop: '20px',
+                        marginLeft: '270px',
+                        padding: '10px 20px',
+                        backgroundColor: 'green',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '5px',
+                        cursor: 'pointer'
+                    }}>
+                    確認無誤，送出通知
                 </button>
             </div>
         </div>
