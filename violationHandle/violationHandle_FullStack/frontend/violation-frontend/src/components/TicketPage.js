@@ -1,12 +1,18 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const TicketInfoPage = ({ ticketData, onClose }) => {
+const TicketInfoPage = ({ ticketData, aiData, eventData, onClose }) => {
     const navigate = useNavigate();
     
     const handleNotifyOwner = () => {
-        // 假設這裡有通知車主的API調用
-        navigate(`/fine-payment/${ticketData.TicketID}`);
+        // 將所有需要的數據通過路由狀態傳遞
+        navigate(`/fine-payment/${ticketData.TicketID}`, {
+            state: {
+                ticketData,
+                aiData,
+                eventData
+            }
+        });
     };
 
     // 格式化日期的函數

@@ -31,6 +31,7 @@ const App = () => {
     const [showDatabaseContent, setShowDatabaseContent] = useState(false);
     const [processStatus, setProcessStatus] = useState('');
     const [ticketData, setTicketData] = useState(null);
+    const [eventResponse, setEventResponse] = useState(null); // 新增状态
 
     // 新增：用於控制當前顯示的頁面
     const [currentPage, setCurrentPage] = useState('main');
@@ -138,6 +139,10 @@ const App = () => {
 
             setViolations(prevViolations => [...prevViolations, violationResponse.data]);
             setProcessStatus('處理完成');
+
+            // AI辨識流程後，获取事件数据
+            const eventDataResponse = await axios.get(`http://localhost:3001/api/eventbasicInfo/${id}`);
+            setEventResponse(eventDataResponse);
 
         } catch (error) {
             // 錯誤處理邏輯
@@ -432,6 +437,8 @@ const App = () => {
                                     {currentPage === 'ticket' && ticketData && (
                                         <TicketPage
                                             ticketData={ticketData}
+                                            aiData={resultData?.aiResult}
+                                            eventData={eventResponse?.data || {}} // 提供默認值
                                             onClose={handleReturnToMain}
                                         />
                                     )}
