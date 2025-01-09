@@ -7,6 +7,8 @@ import TicketPage from './components/TicketPage';
 import DataForm from './components/DataForm';
 import axios from 'axios';
 import DatabaseContent from './components/DatabaseContent';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import FinePaymentPage from './components/FinePaymentPage';
 
 // 設定違規ID的初始值
 let currentID = 1;
@@ -294,148 +296,152 @@ const App = () => {
 
     // 渲染UI的返回區域
     return (
-        // 主要介面容器
-        <div style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            padding: '20px',
-            boxSizing: 'border-box',
-            minHeight: '100vh',
-        }}>
-            {/* 標題區域 */}
-            <h1 style={{ marginBottom: '20px' }}>違規處理系統</h1>
-
-            {/* 資料庫內容切換按鈕 */}
-            <button onClick={toggleDatabaseContent} style={{ marginBottom: '20px' }}>
-                {showDatabaseContent ? '返回主頁' : '預覽資料庫內容'}
-            </button>
-
-            {/* 條件渲染：顯示資料庫內容或主要處理介面 */}
-            {showDatabaseContent ? (
-                // 顯示資料庫內容組件
-                <DatabaseContent violations={violations} tickets={tickets} loading={loading} error={error} />
-            ) : (
-                // 主要處理介面
-                <>
-                    {/* 違規ID顯示 */}
-                    <p>當前舉發 ID：{violationID}</p>
-
-                    {/* 表單區域 */}
-                    <div style={{ width: '100%', maxWidth: '600px', marginTop: '20px' }}>
-                        <DataForm onSubmit={handleFormSubmit} onImageUpload={handleImageUpload} />
-                    </div>
-
-                    {/* 圖片預覽區域 */}
-                    {previewImage && (
-                        <div style={{
-                            marginTop: '20px',
-                            textAlign: 'center',
-                        }}>
-                            <h3>上傳圖片預覽</h3>
-                            <img
-                                src={previewImage}
-                                alt="Preview"
-                                style={{ maxWidth: '100%', maxHeight: '300px' }}
-                            />
-                        </div>
-                    )}
-
-                    {/* 處理狀態顯示 */}
-                    {processStatus && (
-                        <div style={{
-                            marginTop: '10px',
-                            padding: '10px',
-                            backgroundColor: '#f0f0f0',
-                            borderRadius: '5px',
-                            textAlign: 'center'
-                        }}>
-                            <p>{processStatus}</p>
-                        </div>
-                    )}
-
-                    {/* AI辨識結果顯示 */}
-                    {resultData && (
-                        <ResultDisplay
-                            aiResult={resultData.aiResult}
-                            verificationResult={resultData.verificationResult}
-                            comparisonStatus={comparisonStatus}
-                            needsManualReview={resultData.aiResult.licensePlate === '需要人工辨識'}
-                        />
-                    )}
-
-                    {/* 人工審核按鈕區域 */}
-                    {resultData && resultData.aiResult.licensePlate === '需要人工辨識' && (
-                        <div style={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            gap: '20px',
-                            marginTop: '20px'
-                        }}>
-                            <button
-                                onClick={() => handleManualReview('reject')}
-                                style={{
-                                    padding: '10px 20px',
-                                    backgroundColor: '#f44336',
-                                    color: 'white',
-                                    border: 'none',
-                                    borderRadius: '5px',
-                                    cursor: 'pointer',
-                                }}
-                            >
-                                駁回
-                            </button>
-                            <button
-                                onClick={() => handleManualReview('confirm')}
-                                style={{
-                                    padding: '10px 20px',
-                                    backgroundColor: '#4CAF50',
-                                    color: 'white',
-                                    border: 'none',
-                                    borderRadius: '5px',
-                                    cursor: 'pointer',
-                                }}
-                            >
-                                確認違規
-                            </button>
-                        </div>
-                    )}
-
-
-                    {/* 生成罰單按鈕和罰單頁面 */}
-                    {(comparisonStatus === '資訊無誤，結果一致' || isViolationConfirmed === true) && (
+        <Router>
+            <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                padding: '20px',
+                boxSizing: 'border-box',
+                minHeight: '100vh',
+            }}>
+                <Routes>
+                    <Route path="/fine-payment/:ticketId" element={<FinePaymentPage />} />
+                    <Route path="/" element={
                         <>
-                            <button
-                                onClick={handleNavigateToTicket}
-                                style={{
-                                    marginTop: '10px',
-                                    padding: '10px 20px',
-                                    backgroundColor: '#4CAF50',
-                                    color: 'white',
-                                    border: 'none',
-                                    borderRadius: '5px',
-                                    cursor: 'pointer',
-                                }}
-                            >
-                                生成罰單
+                            {/* 標題區域 */}
+                            <h1 style={{ marginBottom: '20px' }}>違規處理系統</h1>
+
+                            {/* 資料庫內容切換按鈕 */}
+                            <button onClick={toggleDatabaseContent} style={{ marginBottom: '20px' }}>
+                                {showDatabaseContent ? '返回主頁' : '預覽資料庫內容'}
                             </button>
+
+                            {/* 條件渲染：顯示資料庫內容或主要處理介面 */}
+                            {showDatabaseContent ? (
+                                // 顯示資料庫內容組件
+                                <DatabaseContent violations={violations} tickets={tickets} loading={loading} error={error} />
+                            ) : (
+                                // 主要處理介面
+                                <>
+                                    {/* 違規ID顯示 */}
+                                    <p>當前舉發 ID：{violationID}</p>
+
+                                    {/* 表單區域 */}
+                                    <div style={{ width: '100%', maxWidth: '600px', marginTop: '20px' }}>
+                                        <DataForm onSubmit={handleFormSubmit} onImageUpload={handleImageUpload} />
+                                    </div>
+
+                                    {/* 圖片預覽區域 */}
+                                    {previewImage && (
+                                        <div style={{
+                                            marginTop: '20px',
+                                            textAlign: 'center',
+                                        }}>
+                                            <h3>上傳圖片預覽</h3>
+                                            <img
+                                                src={previewImage}
+                                                alt="Preview"
+                                                style={{ maxWidth: '100%', maxHeight: '300px' }}
+                                            />
+                                        </div>
+                                    )}
+
+                                    {/* 處理狀態顯示 */}
+                                    {processStatus && (
+                                        <div style={{
+                                            marginTop: '10px',
+                                            padding: '10px',
+                                            backgroundColor: '#f0f0f0',
+                                            borderRadius: '5px',
+                                            textAlign: 'center'
+                                        }}>
+                                            <p>{processStatus}</p>
+                                        </div>
+                                    )}
+
+                                    {/* AI辨識結果顯示 */}
+                                    {resultData && (
+                                        <ResultDisplay
+                                            aiResult={resultData.aiResult}
+                                            verificationResult={resultData.verificationResult}
+                                            comparisonStatus={comparisonStatus}
+                                            needsManualReview={resultData.aiResult.licensePlate === '需要人工辨識'}
+                                        />
+                                    )}
+
+                                    {/* 人工審核按鈕區域 */}
+                                    {resultData && resultData.aiResult.licensePlate === '需要人工辨識' && (
+                                        <div style={{
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            gap: '20px',
+                                            marginTop: '20px'
+                                        }}>
+                                            <button
+                                                onClick={() => handleManualReview('reject')}
+                                                style={{
+                                                    padding: '10px 20px',
+                                                    backgroundColor: '#f44336',
+                                                    color: 'white',
+                                                    border: 'none',
+                                                    borderRadius: '5px',
+                                                    cursor: 'pointer',
+                                                }}
+                                            >
+                                                駁回
+                                            </button>
+                                            <button
+                                                onClick={() => handleManualReview('confirm')}
+                                                style={{
+                                                    padding: '10px 20px',
+                                                    backgroundColor: '#4CAF50',
+                                                    color: 'white',
+                                                    border: 'none',
+                                                    borderRadius: '5px',
+                                                    cursor: 'pointer',
+                                                }}
+                                            >
+                                                確認違規
+                                            </button>
+                                        </div>
+                                    )}
+
+
+                                    {/* 生成罰單按鈕和罰單頁面 */}
+                                    {(comparisonStatus === '資訊無誤，結果一致' || isViolationConfirmed === true) && (
+                                        <>
+                                            <button
+                                                onClick={handleNavigateToTicket}
+                                                style={{
+                                                    marginTop: '10px',
+                                                    padding: '10px 20px',
+                                                    backgroundColor: '#4CAF50',
+                                                    color: 'white',
+                                                    border: 'none',
+                                                    borderRadius: '5px',
+                                                    cursor: 'pointer',
+                                                }}
+                                            >
+                                                生成罰單
+                                            </button>
+                                        </>
+                                    )}
+
+                                    {/* 顯示罰單頁面 */}
+                                    {currentPage === 'ticket' && ticketData && (
+                                        <TicketPage
+                                            ticketData={ticketData}
+                                            onClose={handleReturnToMain}
+                                        />
+                                    )}
+                                </>
+                            )}
                         </>
-                    )}
-
-                    {/* 顯示罰單頁面 */}
-                    {currentPage === 'ticket' && ticketData && (
-                        <TicketPage
-                            ticketData={ticketData}
-                            onClose={handleReturnToMain}
-                        />
-                    )}
-
-
-
-
-                </>
-            )}
-        </div>
+                    } />
+                </Routes>
+            </div>
+        </Router>
     );
 }
 

@@ -1,6 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const TicketPage = ({ ticketData, onClose }) => {
+const TicketInfoPage = ({ ticketData, onClose }) => {
+    const navigate = useNavigate();
+    
+    const handleNotifyOwner = () => {
+        // 假設這裡有通知車主的API調用
+        navigate(`/fine-payment/${ticketData.TicketID}`);
+    };
+
     // 格式化日期的函數
     const formatDate = (dateString) => {
         if (!dateString) return 'N/A';
@@ -49,22 +57,39 @@ const TicketPage = ({ ticketData, onClose }) => {
                 ) : (
                     <p>載入罰單資料中...</p>
                 )}
-                <button
-                    onClick={onClose}
-                    style={{
-                        marginTop: '20px',
-                        padding: '10px 20px',
-                        backgroundColor: '#4CAF50',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '5px',
-                        cursor: 'pointer'
-                    }}>
-                    關閉
-                </button>
+                <div style={{
+                    display: 'flex',
+                    gap: '10px',
+                    marginTop: '20px'
+                }}>
+                    <button
+                        onClick={onClose}
+                        style={{
+                            padding: '10px 20px',
+                            backgroundColor: '#4CAF50',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '5px',
+                            cursor: 'pointer'
+                        }}>
+                        關閉
+                    </button>
+                    <button
+                        onClick={handleNotifyOwner}
+                        style={{
+                            padding: '10px 20px',
+                            backgroundColor: '#d45f7c',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '5px',
+                            cursor: 'pointer'
+                        }}>
+                        確認違規，通知違規車主
+                    </button>
+                </div>
             </div>
         </div>
     );
 };
 
-export default TicketPage;
+export default TicketInfoPage;

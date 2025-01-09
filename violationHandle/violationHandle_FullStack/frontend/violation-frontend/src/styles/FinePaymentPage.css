@@ -1,0 +1,133 @@
+.fine-payment-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.violation-details {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+h2, h3 {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.info-item span:first-child {
+    color: #666;
+}
+
+.fine-amount, .due-date {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.barcode-seal-section {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.barcode, .seal {
+    text-align: center;
+}
+
+.barcode-image {
+    width: 200px;
+    height: 80px;
+    background-color: #ddd;
+    margin-bottom: 10px;
+}
+
+.seal {
+    width: 120px;
+    height: 120px;
+    border: 2px solid #dc3545;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #dc3545;
+    position: relative;
+}
+
+.seal-date {
+    position: absolute;
+    bottom: -20px;
+    right: 0;
+    font-size: 12px;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.print-button {
+    background-color: #6c757d;
+    color: white;
+}
+
+.pay-button {
+    background-color: #28a745;
+    color: white;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+.legal-notice {
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.legal-notice h4 {
+    color: #856404;
+    margin-bottom: 10px;
+}
+
+.notice-section {
+    background-color: #e9ecef;
+    border-radius: 4px;
+    padding: 15px;
+}
+
+.notice-section ul {
+    padding-left: 20px;
+}
+
+.notice-section li {
+    margin-bottom: 5px;
+}
