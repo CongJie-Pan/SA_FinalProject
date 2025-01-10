@@ -14,6 +14,11 @@ router.get('/ai-recognition/:violationId', aiRecognitionController.getAiRecognit
 router.get('/event-basic-info/:violationId', eventBasicInfoController.getEventBasicInfoByViolationId);
 
 // 添加罰單繳納路由
-router.use('/api', finePaymentRoutes);
+router.use('/api', finePaymentRoutes); // 確保路徑前綴正確
+
+// 添加調試路由
+router.get('/api/test', (req, res) => {
+    res.json({ message: 'API is working' });
+});
 
 module.exports = router;
