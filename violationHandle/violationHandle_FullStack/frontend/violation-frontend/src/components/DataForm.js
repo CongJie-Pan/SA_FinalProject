@@ -201,7 +201,7 @@ const DataForm = ({ onSubmit, onImageUpload }) => {
                 borderRadius: '5px',
                 cursor: 'pointer',
             }}>
-                提交（將重新生成隨機資訊）
+                提交
             </button>
         </form>
     );

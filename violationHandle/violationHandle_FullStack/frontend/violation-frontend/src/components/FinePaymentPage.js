@@ -6,6 +6,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import '../styles/FinePaymentPage.css';
+import barcodeImage from '../assets/TestBarcode.jpg';  // 更新引入路徑
 
 // 日誌記錄函數
 const logInfo = (message, data = null) => {
@@ -102,7 +103,7 @@ const FinePaymentPage = () => {
             {/* 違規詳情 */}
             <div className="violation-details">
                 <h2>違規詳細資訊</h2>
-                
+
                 <div className="info-grid">
                     <div className="info-column">
                         <h3>基本資訊</h3>
@@ -112,19 +113,28 @@ const FinePaymentPage = () => {
                         </div>
                         <div className="info-item">
                             <span>車牌號碼</span>
-                            <span>{violationRecord.plateNumber}</span>
+                            <span>0852UH</span>
+
+                        </div>
+                        <div className="info-item">
+                            <span>車主姓名</span>
+                            <span>張三</span>
+
                         </div>
                         <div className="info-item">
                             <span>違規日期</span>
-                            <span>{violationRecord.date}</span>
+                            <span>2025-01-11 </span>
+
                         </div>
                         <div className="info-item">
                             <span>違規時間</span>
-                            <span>{violationRecord.time}</span>
+                            <span>08:25:20 </span>
+
                         </div>
                         <div className="info-item">
                             <span>違規地點</span>
-                            <span>{violationRecord.location}</span>
+                            <span>台北市信義區信義路四段330號</span>
+
                         </div>
                     </div>
 
@@ -155,7 +165,15 @@ const FinePaymentPage = () => {
 
                 <div className="barcode-seal-section">
                     <div className="barcode">
-                        <div className="barcode-image"></div>
+                        <img
+                            src={barcodeImage}  // 使用導入的圖片
+                            alt="條碼"
+                            style={{
+                                width: '200px',
+                                height: 'auto',
+                                marginBottom: '5px'
+                            }}
+                        />
                         <p>違規單條碼</p>
                     </div>
 

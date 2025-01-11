@@ -31,11 +31,11 @@ const ResultDisplay = ({ aiResult, verificationResult, comparisonStatus }) => {
             {needsManualReview ? (
                 // 人工審核提示區段
                 <div className="manual-review-section" style={{ padding: '10px', backgroundColor: '#fff3cd', borderRadius: '5px' }}>
-                    <p style={{ color: '#856404', fontWeight: 'bold' }}>⚠️ 需要人工辨識</p>
+                    <p style={{ color: '#856404', fontWeight: 'bold' }}>⚠️ 請確保上傳為車牌照片</p>
                     <p>原因：{aiResult.reason || '無法確定辨識結果'}</p>
                     {aiResult.aiLicensePlate && (
                         <p>系統初步辨識結果：{aiResult.aiLicensePlate}
-                            <span style={{ color: '#856404', fontSize: '0.9em' }}> (請人工確認)</span>
+                            <span style={{ color: '#856404', fontSize: '0.9em' }}> </span>
                         </p>
                     )}
                 </div>
