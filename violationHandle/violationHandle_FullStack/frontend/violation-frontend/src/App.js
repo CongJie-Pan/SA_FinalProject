@@ -140,6 +140,11 @@ const App = () => {
             setViolations(prevViolations => [...prevViolations, violationResponse.data]);
             setProcessStatus('處理完成');
 
+            // 如果資訊無誤，自動觸發生成罰單
+            if (isMatch) {
+                handleNavigateToTicket();
+            }
+
             // AI辨識流程後，获取事件数据
             const eventDataResponse = await axios.get(`http://localhost:3001/api/eventbasicInfo/${id}`);
             setEventResponse(eventDataResponse);
@@ -262,6 +267,8 @@ const App = () => {
                 const detectedPlate = resultData?.aiResult?.aiLicensePlate;
                 setProcessStatus(`✅ 確認違規 (參考車牌: ${detectedPlate || '無'})`);
                 setIsViolationConfirmed(true);
+                // 自動觸發生成罰單
+                handleNavigateToTicket();
             }
         } catch (error) {
             console.error('Error in manual review:', error);
@@ -410,27 +417,6 @@ const App = () => {
                                                 確認違規
                                             </button>
                                         </div>
-                                    )}
-
-
-                                    {/* 生成罰單按鈕和罰單頁面 */}
-                                    {(comparisonStatus === '資訊無誤，結果一致' || isViolationConfirmed === true) && (
-                                        <>
-                                            <button
-                                                onClick={handleNavigateToTicket}
-                                                style={{
-                                                    marginTop: '10px',
-                                                    padding: '10px 20px',
-                                                    backgroundColor: '#4CAF50',
-                                                    color: 'white',
-                                                    border: 'none',
-                                                    borderRadius: '5px',
-                                                    cursor: 'pointer',
-                                                }}
-                                            >
-                                                生成罰單
-                                            </button>
-                                        </>
                                     )}
 
                                     {/* 顯示罰單頁面 */}

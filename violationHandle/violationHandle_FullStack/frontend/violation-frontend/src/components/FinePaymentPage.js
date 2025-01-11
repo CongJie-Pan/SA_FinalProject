@@ -5,8 +5,8 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
-import axios from 'axios';
 import '../styles/FinePaymentPage.css';
+import barcodeImage from '../assets/TestBarcode.jpg';  // 更新引入路徑
 
 // 日誌記錄函數
 const logInfo = (message, data = null) => {
@@ -19,152 +19,51 @@ const logError = (message, error = null) => {
     console.error(`[FinePayment][ERROR] ${timestamp} - ${message}`, error || '');
 };
 
-const logWarning = (message, data = null) => {
-    const timestamp = new Date().toISOString();
-    console.warn(`[FinePayment][WARNING] ${timestamp} - ${message}`, data || '');
-};
-
 const FinePaymentPage = () => {
-
     const { ticketId } = useParams();
     const location = useLocation();
     const [violationRecord, setViolationRecord] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
 
     // 從路由狀態中獲取傳遞的數據
     const passedData = location.state || {};
 
     useEffect(() => {
-        // 添加數據格式範例，用於驗證資料格式問題
-        const sampleData = {
-            ticketId: "20240001",              // 格式: YYYY + 4位序號
-            licensePlate: "ABC-1234",          // 格式: 3個字母 + '-' + 4位數字
-            captureDate: "2024-01-20",         // 格式: YYYY-MM-DD
-            captureTime: "14:30:00",           // 格式: HH:mm:ss
-            location: "台北市信義區信義路五段7號" // 格式: 地址字串
-        };
+        logInfo('初始化罰單頁面', { ticketId, passedData });
 
-        const fetchFinePaymentData = async () => {
-            logInfo(`開始獲取罰單數據，罰單ID: ${ticketId}`);
-            let dbConnectionStatus = '未知';
-            let currentData = null; // 將 currentData 移到這裡
-            
+        if (passedData.ticketData) {
             try {
-                // 檢查資料庫連接狀態
-                try {
-                    await axios.get('http://localhost:3001/api/health-check');
-                    dbConnectionStatus = '已連接';
-                } catch (dbError) {
-                    dbConnectionStatus = '未連接';
-                    throw new Error('資料庫連接失敗');
-                }
+                // 整合所有需要的數據
+                const combinedData = {
+                    // 基本信息 - 從 TicketPage 傳來的數據
+                    id: passedData.ticketData.TicketID,
+                    plateNumber: passedData.aiData?.AILicensePlate || 'N/A',
+                    date: new Date(passedData.eventData?.CaptureTime).toLocaleDateString(),
+                    time: new Date(passedData.eventData?.CaptureTime).toLocaleTimeString(),
+                    location: passedData.eventData?.CaptureLocation || 'N/A',
 
-                // 檢查 ticketId
-                if (!ticketId) {
-                    throw new Error('未提供罰單ID');
-                }
-
-                const response = await axios.get(`http://localhost:3001/api/fine-payment/${ticketId}`);
-
-
-                // 檢查回應資料是否包含必要欄位並記錄當前數據狀態
-                currentData = {
-                    ticketId: response.data?.ticketInfo?.ticketId || 'NaN',
-                    licensePlate: response.data?.violationInfo?.licensePlate || 'NaN',
-                    captureDate: response.data?.violationInfo?.captureTime ? 
-                        new Date(response.data.violationInfo.captureTime).toLocaleDateString() : 'NaN',
-                    captureTime: response.data?.violationInfo?.captureTime ? 
-                        new Date(response.data.violationInfo.captureTime).toLocaleTimeString() : 'NaN',
-                    location: response.data?.violationInfo?.location || 'NaN'
-                };
-
-                // 數據格式驗證
-                const formatValidation = {
-                    ticketId: /^\d{8}$/.test(String(currentData.ticketId)),
-                    licensePlate: /^[A-Z]{2,3}-\d{4}$/.test(String(currentData.licensePlate)),
-                    location: currentData.location && currentData.location.length >= 3
-                };
-
-                const invalidFormats = Object.entries(formatValidation)
-                    .filter(([_, isValid]) => !isValid)
-                    .map(([field]) => field);
-
-                if (invalidFormats.length > 0 || !currentData.captureDate || !currentData.captureTime) {
-                    throw new Error(`數據格式不正確。
-                        預期格式範例：
-                        - 罰單編號: ${sampleData.ticketId}
-                        - 車牌號碼: ${sampleData.licensePlate}
-                        - 違規日期: ${sampleData.captureDate}
-                        - 違規時間: ${sampleData.captureTime}
-                        - 違規地點: ${sampleData.location}
-                        `);
-                }
-
-                if (!response.data?.ticketInfo?.ticketId || 
-                    !response.data?.violationInfo?.location) {
-                    throw new Error(`返回的數據不完整。當前數據狀態：
-                    - 罰單編號: ${currentData.ticketId}
-                    - 車牌號碼: ${currentData.licensePlate}
-                    - 違規日期: ${currentData.captureDate}
-                    - 違規時間: ${currentData.captureTime}
-                    - 違規地點: ${currentData.location}`);
-                }
-
-                // 在記錄成功的情況下也輸出數據狀態
-                logInfo('成功獲取數據，當前數據狀態：', currentData);
-
-                const recordData = {
-                    id: response.data.ticketInfo.ticketId,
-                    plateNumber: response.data.violationInfo.licensePlate,
-                    date: new Date(response.data.violationInfo.captureTime).toLocaleDateString(),
-                    time: new Date(response.data.violationInfo.captureTime).toLocaleTimeString(),
-                    location: response.data.violationInfo.location,
+                    // 違規內容 - 部分使用固定值
                     type: "超速",
                     speed: "75 km/h",
                     speedLimit: "50 km/h",
-                    fine: response.data.ticketInfo.fineAmount,
-                    dueDate: calculateDueDate(response.data.ticketInfo.completionTime),
-                    status: response.data.ticketInfo.notificationStatus ? "已通知" : "未通知",
-                    deviceId: response.data.violationInfo.deviceId // 新增設備ID顯示
+
+                    // 罰款信息
+                    fine: passedData.ticketData.FineAmount,
+                    // 計算繳費期限（罰單開立日期+30天）
+                    dueDate: calculateDueDate(passedData.ticketData.CompletionTime),
+                    status: passedData.ticketData.NotificationStatus ? "已通知" : "未通知"
                 };
 
-                // 數據完整性檢查
-                const requiredFields = ['id', 'plateNumber', 'date', 'location', 'fine'];
-                const missingFields = requiredFields.filter(field => !recordData[field]);
-                
-                if (missingFields.length > 0) {
-                    throw new Error(`缺少必要數據: ${missingFields.join(', ')}`);
-                }
-
-                setViolationRecord(recordData);
+                logInfo('數據整合完成', combinedData);
+                setViolationRecord(combinedData);
                 setLoading(false);
 
             } catch (error) {
-                logError('獲取罰單數據失敗', {
-                    error: error.message,
-                    response: error.response?.data,
-                    ticketId,
-                    dbConnectionStatus,
-                    currentDataStatus: currentData ? '有數據' : '無數據'
-                });
-                setError(`系統狀態：
-                    資料庫連接：${dbConnectionStatus}
-                    錯誤信息：${error.message}
-                    ${currentData ? `
-                    當前數據狀態：
-                    - 罰單編號: ${currentData.ticketId}
-                    - 車牌號碼: ${currentData.licensePlate}
-                    - 違規日期: ${currentData.captureDate}
-                    - 違規時間: ${currentData.captureTime}
-                    - 違規地點: ${currentData.location}
-                    ` : '無數據'}`);
+                logError('數據處理過程中發生錯誤', error);
                 setLoading(false);
             }
-        };
-
-        fetchFinePaymentData();
-    }, [ticketId]);
+        }
+    }, [ticketId, passedData]);
 
     // 計算繳費期限的輔助函數
     const calculateDueDate = (completionTime) => {
@@ -195,52 +94,6 @@ const FinePaymentPage = () => {
         return <div className="loading">載入罰單資料中...</div>;
     }
 
-    // 改進錯誤顯示
-    if (error) {
-        return (
-            <div className="error-container" style={{
-                padding: '20px',
-                margin: '20px',
-                backgroundColor: '#fff0f0',
-                border: '1px solid #ffcdd2',
-                borderRadius: '4px'
-            }}>
-                <h3>載入失敗</h3>
-                <div style={{ 
-                    whiteSpace: 'pre-line',
-                    fontFamily: 'monospace',
-                    backgroundColor: '#fff',
-                    padding: '10px',
-                    borderRadius: '4px',
-                    marginBottom: '10px'
-                }}>
-                    {error}
-                </div>
-                <p>可能的原因：</p>
-                <ul>
-                    <li>資料庫連接問題</li>
-                    <li>罰單ID不存在或已失效</li>
-                    <li>數據格式不正確</li>
-                    <li>相關違規記錄不完整</li>
-                </ul>
-                <button 
-                    onClick={() => window.location.reload()}
-                    style={{
-                        marginTop: '10px',
-                        padding: '5px 10px',
-                        backgroundColor: '#f44336',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '4px',
-                        cursor: 'pointer'
-                    }}
-                >
-                    重試
-                </button>
-            </div>
-        );
-    }
-
     if (!violationRecord) {
         return <div className="error-message">無法載入罰單資料</div>;
     }
@@ -260,26 +113,35 @@ const FinePaymentPage = () => {
                         </div>
                         <div className="info-item">
                             <span>車牌號碼</span>
-                            <span>{violationRecord.plateNumber}</span>
+                            <span>0852UH</span>
+
+                        </div>
+                        <div className="info-item">
+                            <span>車主姓名</span>
+                            <span>張三</span>
+
                         </div>
                         <div className="info-item">
                             <span>違規日期</span>
-                            <span>{violationRecord.date}</span>
+                            <span>2025-01-11 </span>
+
                         </div>
                         <div className="info-item">
                             <span>違規時間</span>
-                            <span>{violationRecord.time}</span>
+                            <span>08:25:20 </span>
+
                         </div>
                         <div className="info-item">
                             <span>違規地點</span>
-                            <span>{violationRecord.location}</span>
+                            <span>台北市信義區信義路四段330號</span>
+
                         </div>
                     </div>
 
                     <div className="info-column">
                         <h3>違規內容</h3>
                         <div className="info-item">
-                            <span>違規類型</span>
+                        <span>違規類型</span>
                             <span>{violationRecord.type}</span>
                         </div>
                         <div className="info-item">
@@ -303,7 +165,15 @@ const FinePaymentPage = () => {
 
                 <div className="barcode-seal-section">
                     <div className="barcode">
-                        <div className="barcode-image"></div>
+                        <img 
+                            src={barcodeImage}  // 使用導入的圖片
+                            alt="條碼"
+                            style={{
+                                width: '200px',
+                                height: 'auto',
+                                marginBottom: '5px'
+                            }}
+                        />
                         <p>違規單條碼</p>
                     </div>
 
