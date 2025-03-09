@@ -1,5 +1,7 @@
 # SA_FinalProject
+
 這是系統分析與設計課程的期末專案，實作的是罰單超速管理系統，且與台北城市儀表板做結合，以利數據分析。This is the final project of the system analysis and design course. It implements a speeding ticket management system and integrates it with the Taipei city dashboard to facilitate data analysis.
+
 ---
 ## 系統概述
 此系統為一個智慧交通違規管理系統，旨在自動化處理交通違規事件，從捕捉違規影像到生成罰單並通知車主，整合 AI 技術與人工審核以提升效率。系統涵蓋違規事件資料處理、車輛資訊驗證、罰單生成及通知等功能，並透過數據儀表板提供即時的違規統計分析，協助交通管理單位進行決策。系統包含多個子系統，各自承擔專屬任務並相互協作：
