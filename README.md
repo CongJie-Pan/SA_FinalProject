@@ -1,6 +1,12 @@
 # SA_FinalProject
 
 這是系統分析與設計課程的期末專案，實作的是罰單超速管理系統，且與台北城市儀表板做結合，以利數據分析。This is the final project of the system analysis and design course. It implements a speeding ticket management system and integrates it with the Taipei city dashboard to facilitate data analysis.
+- 組員分工分配
+  - 潘驄杰 -組長：系統的基本建置
+  - 蕭帛昊 -組員：台北城市儀表板實作
+  - 陳昕妤 -組員：簡報與文書製作
+  - 黃歆媛 -組員：簡報與文書製作
+  - 莫銘海 -組員：程式碼協助
 
 ---
 ## 系統概述
@@ -15,5 +21,14 @@
 更詳細的系統相關說明細節，請參考文書資料夾中的規格書文件。
 
 ## Demo Video
-### 罰單超速管理系統
+### 違規處理系統(正常罰單開立流程)
+[影片參見此連結](https://github.com/user-attachments/assets/99b616bf-2e52-4928-8861-b2decfd0c24b)
+### 違規處理系統(錯誤辨識流程)
+[影片參見此連結](https://github.com/user-attachments/assets/c4ede098-f098-4125-bd3b-f74ae755be18)
+### 台北城市儀表板實作
+[影片參見此連結](https://github.com/user-attachments/assets/b839d568-e356-46c4-b0df-060bfaaaa6fa)
+
+
+
+
 
